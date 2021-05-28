@@ -1,11 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { Dropbox, Error, files } from 'dropbox';
-import { File, IncomingForm } from 'formidable';
+import { File } from 'formidable';
 
-import fs from 'fs';
-// import { handleRequestForm } from '../../helpers/UploadHelper';
-
-const token = 'L_vegPt8JHIAAAAAAAAAAQzNfspnhmnYOSD3Fhy-auaUUCzm57fK9cgPwLnBf3n_';
+import { handleRequestForm, storeFile } from '../../helpers/UploadHelper';
 
 export const config = {
   api: {
@@ -14,39 +10,13 @@ export const config = {
 };
 
 export default async function createPodcast(req: VercelRequest, res: VercelResponse) {
-  const form = new IncomingForm();
+  const data = await handleRequestForm(req);
+  const audio = data.files.audio as File;
 
-  form.parse(req, (err, fields, filess) => {
-    console.log('fields:', fields);
-    console.log('files:', filess);
-
-    const { audio } = filess;
-    const file = audio as File;
-
-    const dropbox = new Dropbox({
-      accessToken: token,
-    });
-
-    console.log(file.path);
-    fs.readFile(file.path, (erro, contents) => {
-      if (erro) console.error(erro);
-
-      console.log(contents);
-      // This uploads basic.js to the root of your dropbox
-      dropbox.filesUpload({
-        contents,
-        path: `/${file.name}`,
-        autorename: true,
-        strict_conflict: true,
-      })
-        .then((response: any) => {
-          console.log(response);
-        })
-        .catch((uploadErr: Error<files.UploadError>) => {
-          console.log(uploadErr);
-        });
-    });
+  const uploaded = await storeFile({
+    localPath: audio.path,
+    remotePath: `/${audio.name}`,
   });
 
-  return res.json('ok');
+  return res.json({ uploaded });
 }

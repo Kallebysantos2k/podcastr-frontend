@@ -11,7 +11,7 @@ export interface IRequestForm {
   files: Files
 }
 
-export interface IUploadedFile {
+export interface IStoredItem {
   id: string,
   name: string,
   location: string,
@@ -34,7 +34,7 @@ export async function handleRequestForm(request: VercelRequest): Promise<IReques
   });
 }
 
-export async function storeFile({ localPath, remotePath }: StoreFileProps): Promise<IUploadedFile> {
+export async function storeFile({ localPath, remotePath }: StoreFileProps): Promise<IStoredItem> {
   return new Promise((resolve, reject) => {
     const dropbox = new Dropbox({
       accessToken: process.env.DROPBOX_TOKEN,
@@ -62,5 +62,21 @@ export async function storeFile({ localPath, remotePath }: StoreFileProps): Prom
         })
         .catch((uploadError) => reject(uploadError));
     });
+  });
+}
+
+export async function storeFolder(path: string): Promise<IStoredItem> {
+  return new Promise((resolve, reject) => {
+    const dropbox = new Dropbox({
+      accessToken: process.env.DROPBOX_TOKEN,
+    });
+
+    dropbox.filesCreateFolderV2({ path })
+      .then(({ result }) => resolve({
+        id: result.metadata.id,
+        name: result.metadata.name,
+        location: result.metadata.path_lower,
+      }))
+      .catch((folderError) => reject(folderError));
   });
 }

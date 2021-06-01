@@ -1,18 +1,31 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjIwMjMzMTEsImV4cCI6MTYyMjAyNjkxMSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluQG1haWwuY29tIn0.VY5G4sgd6aR3YEn43z_Lbg4N0t0X1yhZMvzM8-MJK3hXWMpcEzu1eWNTdC13zoPX0E3eRstjMcRixOWfVxN7ZXRtBG7fDzv2mypxbG42SqiqA3PxsL63Ct5hmgCqprIoVE0wAB5GKj6i011WSTFHxcRRfqzmJBe_V1Sls5xCo_HEp5xKaGU9ePCOvSPqReLd90_xvafgJ19a-A0P-mrl-atj_Zh2M88xIUVLWbWs4W56UMXPaYLDnRAQ--dK6_EJ6PgguSCGA-kZtwkESz9c7YmSA1djgu-SsBLCkXA3-QkEcJx3PzyiESIs4_gLMLXuwm-otOHc1rmEyKcgVeT8ow';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjI1MzY1MDcsImV4cCI6MTYyMjU0MDEwNywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoia2FsbGVieUBlbWFpbC5jb20ifQ.bucaY2SawXey3DQIZB-zzuWa8aIEJAV130FNwbMocEWHBUsXmosK-toHZfM27H_Rwrl0d-VstD-cdPB98QxNtMPexANrmkl5HCkBdwlRS8fSxBkmQ9UyJYbwZV8aaWlZBNz8SxxB1KHCxWIQEjve_rOjxRVj38YHubL9VD8COObm3SUk_HPtfAOi58OS8h0QGHlFf7lO_PyGL0-fFo5lNUJyQPO28Wm29fpjgAN6JwA2eazlJptbn7i49gBT37TFPb67GX5fquD_oD-joBGHjVBYaeFATRWkSNRZrmJhR9oPoqNadIJGwvhFzn9nPQra7Y6TqmCIsfZ3cYRhccKBfQ';
 
-export default function Home() {
-  useEffect(() => {
-    /*  axios.get('http://localhost:8000/podcast/', {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(console.log); */
-  }, []);
-
+export default function Home(props) {
+  console.log(props.episodes);
+  const episodes = JSON.stringify(props.episodes);
   return (
     <div>
-      <h1>Hello world 🔥</h1>
+      <h1>Episodes🔥</h1>
+      <p>{episodes}</p>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const response = await axios.get('http://localhost:8000/podcast/', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const data = await response.data;
+  console.log(data);
+
+  return {
+    props: {
+      episodes: data,
+    },
+    revalidate: 60 * 2,
+  };
 }

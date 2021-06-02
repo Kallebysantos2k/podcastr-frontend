@@ -1,11 +1,13 @@
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import convertDurationToTimeString from '../../helpers/convertDurationToTimeString';
 
 export interface Episode {
   id: string,
   name: string,
   members: string,
   duration: number,
+  timeString: string,
   description: string,
   publishedAt: string,
   audio: string,
@@ -18,6 +20,7 @@ export function parseToEpisode(data: any): Episode {
     name: data.name,
     members: data.members,
     duration: Number(data.duration),
+    timeString: convertDurationToTimeString(Number(data.duration)),
     description: data.description,
     publishedAt: format(parseISO(data.publishedAt), 'd MMM yy', { locale: ptBR }),
     audio: data.fileUrl,

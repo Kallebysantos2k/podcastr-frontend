@@ -10,9 +10,12 @@ interface HomeProps {
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const { data } = await api.get('podcast/');
 
+  const parsedData: Episode[] = data.map(parseToEpisode);
+  const episodes = parsedData.sort((a, b) => b.id - a.id);
+
   return {
     props: {
-      episodes: data.map(parseToEpisode),
+      episodes,
     },
     revalidate: 60 * 2,
   };

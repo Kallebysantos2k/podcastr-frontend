@@ -3,7 +3,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import convertDurationToTimeString from '../../helpers/convertDurationToTimeString';
 
 export interface Episode {
-  id: string,
+  id: number,
   name: string,
   members: string,
   duration: number,

@@ -61,7 +61,41 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
 
       <section className={styles.allEpisodesContainer}>
         <h2>Todos episodios</h2>
-        <p>{JSON.stringify(allEpisodes)}</p>
+
+        <table cellSpacing={0}>
+          <thead>
+            <th />
+            <th>Podcast</th>
+            <th>Participantes</th>
+            <th>Data</th>
+            <th>Duração</th>
+            <th />
+          </thead>
+
+          <tbody>
+            {allEpisodes.map((episode) => (
+              <tr key={episode.id}>
+                <td>
+                  <Image
+                    width={120}
+                    height={120}
+                    src={episode.thumbnail}
+                    alt={episode.name}
+                  />
+                </td>
+                <td><a href="">{episode.name}</a></td>
+                <td>{episode.members}</td>
+                <td>{episode.publishedAt}</td>
+                <td>{episode.timeString}</td>
+                <td>
+                  <button type="button">
+                    <img src="/play-green.svg" alt="Reproduzir episodio" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
     </div>
   );

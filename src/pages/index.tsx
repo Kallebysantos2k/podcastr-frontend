@@ -75,7 +75,7 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
           <tbody>
             {allEpisodes.map((episode) => (
               <tr key={episode.id}>
-                <td>
+                <td className={styles.episodeThumbnail}>
                   <Image
                     width={120}
                     height={120}
@@ -83,8 +83,15 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
                     alt={episode.name}
                   />
                 </td>
-                <td><a href="">{episode.name}</a></td>
-                <td>{episode.members}</td>
+
+                <td className={styles.episodeInfo}>
+                  <a href="">{episode.name}</a>
+                </td>
+
+                <td className={styles.episodeInfo}>
+                  {episode.members}
+                </td>
+
                 <td>{episode.publishedAt}</td>
                 <td>{episode.timeString}</td>
                 <td>

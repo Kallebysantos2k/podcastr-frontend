@@ -141,12 +141,21 @@
     }
 
     td {
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
       font-size: 0.875rem;
 
-      img {
+      &.episodeInfo {
+        max-width: 0;
+        text-overflow: ellipsis;
+      }
+
+      &.episodeThumbnail img {
         width: 2.5rem;
         height: 2.5rem;
-        border-radius: 0.5rem;
+        min-width: 2.5rem;
+        border-radius: 0.5rem; 
       }
 
       a {
@@ -154,7 +163,7 @@
         font: 600 1rem Lexend, sans-serif;
         text-decoration: none;
         line-height: 1.4rem;
-      
+
         &:hover {
           text-decoration: underline;
         }

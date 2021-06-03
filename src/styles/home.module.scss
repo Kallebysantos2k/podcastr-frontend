@@ -1,0 +1,122 @@
+.homeContainer {
+  height: calc(100vh - 6.5rem);
+  padding: 0 4rem;
+  overflow-y: scroll;
+
+  h2 {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.latestEpisodesContainer {
+  ul {
+    list-style: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  li {
+    flex: 1;
+    padding: 1.25rem;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid var(--gray-100);
+    border-radius: 1.25rem;
+    background-color: var(--white);
+  
+    .latestEpisodeThumbnail img {
+      width: 6rem;
+      height: 6rem;
+      min-width: 6rem;
+      border-radius: 1rem;
+    }
+
+    .episodeDetails {
+      flex: 1;
+      margin-left: 1rem;
+    
+      a {
+        display: block;
+        color: var(--gray-800);
+        
+        font-family: Lexend, sans-serif;
+        text-decoration: none;
+        font-weight: 600;
+        line-height: 1.4rem;
+      
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      p {
+        max-width: 70%;
+        margin-top: 0.5rem;
+        
+        overflow: hidden;
+        white-space: nowrap;
+        
+        font-size: 0.875rem;
+        text-overflow: ellipsis;
+      }
+
+      span {
+        margin-top: 0.5rem;
+        display: inline-block;
+        font-size: 0.875rem;
+      
+        &:last-child {
+          padding-left: 0.5rem;
+          margin-left: 0.5rem;
+          position: relative;
+
+          &::before {
+            width: 4px;
+            height: 4px;
+            
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            content: "";
+
+            border-radius: 50%;
+            background-color: #DDD;                        
+          }
+        }
+      }
+    }
+
+    button {
+      width: 2.5rem;
+      height: 2.5rem;
+
+      position: absolute;
+      right: 2rem;
+      bottom: 2rem;
+
+      border: 1px solid var(--gray-100);
+      border-radius: 0.675rem;
+      background-color: var(--white);
+
+      font-size: 0;
+      transition: filter 0.2s;
+    
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      &:hover {
+        filter: brightness(0.95);
+      }
+    }
+  }
+}

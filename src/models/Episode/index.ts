@@ -24,6 +24,6 @@ export function parseToEpisode(data: any): Episode {
     description: data.description,
     publishedAt: format(parseISO(data.publishedAt), 'd MMM yy', { locale: ptBR }),
     audio: data.fileUrl,
-    thumbnail: data.thumbnailUrl,
+    thumbnail: String(`${data.thumbnailUrl}?raw=1`),
   };
 }

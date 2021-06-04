@@ -1,5 +1,6 @@
 import React from 'react';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import Image from 'next/image';
 import api from '../services/api';
 import styles from '../styles/home.module.scss';
@@ -45,7 +46,10 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
               </div>
 
               <div className={styles.episodeDetails}>
-                <a href="#">{episode.name}</a>
+                <Link href={`/episodes/${episode.id}`}>
+                  <a>{episode.name}</a>
+                </Link>
+
                 <p>{episode.members}</p>
                 <span>{episode.publishedAt}</span>
                 <span>{episode.timeString}</span>
@@ -87,7 +91,9 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
                 </td>
 
                 <td className={styles.episodeInfo}>
-                  <a href="">{episode.name}</a>
+                  <Link href={`/episodes/${episode.id}`}>
+                    <a>{episode.name}</a>
+                  </Link>
                 </td>
 
                 <td className={styles.episodeInfo}>

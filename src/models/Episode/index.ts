@@ -23,7 +23,7 @@ export function parseToEpisode(data: any): Episode {
     timeString: convertDurationToTimeString(Number(data.duration)),
     description: data.description,
     publishedAt: format(parseISO(data.publishedAt), 'd MMM yy', { locale: ptBR }),
-    audio: data.fileUrl,
+    audio: String(`${data.fileUrl}?raw=1`),
     thumbnail: String(`${data.thumbnailUrl}?raw=1`),
   };
 }

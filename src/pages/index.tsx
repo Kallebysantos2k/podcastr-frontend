@@ -1,5 +1,5 @@
-import React from 'react';
-import { GetStaticProps } from 'next';
+import React, { useContext } from 'react';
+import { GetStaticPropsResult } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import api from '../services/api';
@@ -7,14 +7,14 @@ import styles from '../styles/home.module.scss';
 import { Episode, parseToEpisode } from '../models/Episode';
 
 interface HomeProps {
-  latestEpisodes: Episode[],
-  allEpisodes: Episode[],
+  latestEpisodes: [Episode],
+  allEpisodes: [Episode],
 }
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>> {
   const { data } = await api.get('podcast/');
 
-  const parsedData: Episode[] = data.map(parseToEpisode);
+  const parsedData = data.map(parseToEpisode);
   const episodes = parsedData.sort((a, b) => b.id - a.id);
 
   return {
@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
     },
     revalidate: 60 * 2,
   };
-};
+}
 
 export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
   return (

@@ -27,10 +27,12 @@
         "import/extensions": "off",
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/control-has-associated-label": "off",
+        "react/jsx-one-expression-per-line": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
         "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
-        "react/jsx-props-no-spreading": "off"
+        "react/jsx-props-no-spreading": "off",
+        "@typescript-eslint/no-unused-vars": [ 2, {"args": "none"}]
     }
 }

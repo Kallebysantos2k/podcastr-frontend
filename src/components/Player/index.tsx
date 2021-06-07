@@ -40,6 +40,15 @@ export default function Player() {
           )
       }
 
+      {
+        episode && (
+          <audio
+            src={episode.audio}
+            autoPlay
+          />
+        )
+      }
+
       <footer className={!episode ? styles.empty : ''}>
         <div className={styles.progress}>
           <span>00:00</span>

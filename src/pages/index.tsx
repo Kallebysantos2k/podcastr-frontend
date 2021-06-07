@@ -5,6 +5,7 @@ import Image from 'next/image';
 import api from '../services/api';
 import styles from '../styles/home.module.scss';
 import { Episode, parseToEpisode } from '../models/Episode';
+import { PlayerContext } from '../contexts/PlayerContext';
 
 interface HomeProps {
   latestEpisodes: [Episode],
@@ -27,6 +28,8 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
 }
 
 export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
+  const { play } = useContext(PlayerContext);
+
   return (
     <div className={styles.homeContainer}>
       <section className={styles.latestEpisodesContainer}>
@@ -55,7 +58,7 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
                 <span>{episode.timeString}</span>
               </div>
 
-              <button type="button">
+              <button type="button" onClick={() => play(episode)}>
                 <img src="/play-green.svg" alt="Reproduzir episodio" />
               </button>
             </li>
@@ -103,7 +106,7 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
                 <td>{episode.publishedAt}</td>
                 <td>{episode.timeString}</td>
                 <td>
-                  <button type="button">
+                  <button type="button" onClick={() => play(episode)}>
                     <img src="/play-green.svg" alt="Reproduzir episodio" />
                   </button>
                 </td>

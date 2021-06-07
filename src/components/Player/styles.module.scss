@@ -115,5 +115,13 @@
       border-radius: 1rem;
       background-color: var(--purple-400);
     }
+
+    &:hover:disabled {
+      cursor: default;
+    }
+
+    &:hover:not(:disabled) {
+      opacity: 0.65;
+    }
   }
 }

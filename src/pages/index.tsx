@@ -21,7 +21,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
   return {
     props: {
       latestEpisodes: episodes.slice(0, 2),
-      allEpisodes: episodes,
+      allEpisodes: episodes.slice(2, episodes.length),
     },
     revalidate: 60 * 2,
   };

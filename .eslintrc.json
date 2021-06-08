@@ -29,6 +29,7 @@
         "jsx-a11y/control-has-associated-label": "off",
         "react/jsx-one-expression-per-line": "off",
         "jsx-a11y/media-has-caption": "off",
+        "no-unused-expressions": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
         "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
         "react/prop-types": "off",

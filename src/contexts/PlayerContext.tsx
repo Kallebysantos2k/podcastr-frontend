@@ -6,6 +6,7 @@ interface PlayerContextData {
   episodeList: Episode[],
   currentEpisodeIndex: number,
   play: (episode: Episode) => void,
+  setPlayState: (state: boolean) => void,
   togglePlay: () => void,
 }
 
@@ -31,12 +32,17 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
     setIsPlaying(!isPlaying);
   }
 
+  function setPlayState(state: boolean) {
+    setIsPlaying(state);
+  }
+
   return (
     <PlayerContext.Provider value={{
       isPlaying,
       episodeList,
       currentEpisodeIndex,
       play,
+      setPlayState,
       togglePlay,
     }}
     >

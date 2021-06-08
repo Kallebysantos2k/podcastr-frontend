@@ -11,6 +11,7 @@ export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const {
+    setPlayState,
     isPlaying,
     togglePlay,
     episodeList,
@@ -61,6 +62,8 @@ export default function Player() {
             src={episode.audio}
             ref={audioRef}
             autoPlay
+            onPlay={() => setPlayState(true)}
+            onPause={() => setPlayState(false)}
           />
         )
       }

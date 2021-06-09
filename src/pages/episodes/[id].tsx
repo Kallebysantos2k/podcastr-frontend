@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Episode, parseToEpisode } from '../../models/Episode';
 import api from '../../services/api';
 import styles from './styles.module.scss';
+import { usePlayer } from '../../contexts/PlayerContext';
 
 interface EpisodeProps {
   episode: Episode,
@@ -26,6 +27,8 @@ export const getStaticProps: GetStaticProps<EpisodeProps> = async (ctx) => {
 };
 
 export default function EpisodePage({ episode }: EpisodeProps) {
+  const { play } = usePlayer();
+
   return (
     <div className={styles.episodeContainer}>
       <div className={styles.thumbnailContainer}>
@@ -42,7 +45,10 @@ export default function EpisodePage({ episode }: EpisodeProps) {
           src={episode.thumbnail}
         />
 
-        <button type="button">
+        <button
+          type="button"
+          onClick={() => play(episode)}
+        >
           <img src="/play.svg" alt="Reproduzir episodio" />
         </button>
       </div>

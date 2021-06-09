@@ -86,6 +86,7 @@ export default function Player() {
             ref={audioRef}
             autoPlay
             loop={isLooping}
+            onEnded={playNext}
             onPlay={() => setPlayState(true)}
             onPause={() => setPlayState(false)}
             onLoadedMetadata={setupProgressListener}

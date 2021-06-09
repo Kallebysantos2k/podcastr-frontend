@@ -46,6 +46,11 @@ export default function Player() {
     });
   }
 
+  function handleSliderSeek(amout: number) {
+    audioRef.current.currentTime = amout;
+    setProgress(amout);
+  }
+
   return (
     <div className={styles.playerContainer}>
       <header>
@@ -99,6 +104,7 @@ export default function Player() {
                   <Slider
                     max={episode.duration}
                     value={progress}
+                    onChange={handleSliderSeek}
                     trackStyle={{ backgroundColor: '#04d361' }}
                     railStyle={{ backgroundColor: '#9f75ff' }}
                     handleStyle={{ borderColor: '#9f75ff' }}

@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useState } from 'react';
+import {
+  createContext, ReactNode, useContext, useState,
+} from 'react';
 import { Episode } from '../models/Episode';
 
 interface PlayerContextData {
@@ -20,6 +22,8 @@ interface PlayerContextProviderProps {
 }
 
 export const PlayerContext = createContext({} as PlayerContextData);
+
+export const usePlayer = () => useContext(PlayerContext);
 
 export function PlayerContextProvider({ children }: PlayerContextProviderProps) {
   const [isPlaying, setIsPlaying] = useState(false);

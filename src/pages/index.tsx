@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { GetStaticPropsResult } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import api from '../services/api';
 import styles from '../styles/home.module.scss';
 import { Episode, parseToEpisode } from '../models/Episode';
-import { PlayerContext } from '../contexts/PlayerContext';
+import { usePlayer } from '../contexts/PlayerContext';
 
 interface HomeProps {
   latestEpisodes: [Episode],
@@ -28,7 +28,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
 }
 
 export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
-  const { playList } = useContext(PlayerContext);
+  const { playList } = usePlayer();
 
   const episodesList = [...latestEpisodes, ...allEpisodes];
 

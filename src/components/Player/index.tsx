@@ -1,10 +1,10 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 import Image from 'next/image';
-import { PlayerContext } from '../../contexts/PlayerContext';
+import { usePlayer } from '../../contexts/PlayerContext';
 import styles from './styles.module.scss';
 
 export default function Player() {
@@ -20,7 +20,7 @@ export default function Player() {
     togglePlay,
     episodeList,
     currentEpisodeIndex,
-  } = useContext(PlayerContext);
+  } = usePlayer();
 
   const episode = episodeList[currentEpisodeIndex];
 

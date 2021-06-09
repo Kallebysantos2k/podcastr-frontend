@@ -11,6 +11,8 @@ export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const {
+    playNext,
+    playPrevious,
     setPlayState,
     isPlaying,
     togglePlay,
@@ -96,7 +98,11 @@ export default function Player() {
             <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
 
-          <button type="button" disabled={!episode}>
+          <button
+            type="button"
+            disabled={!episode}
+            onClick={playPrevious}
+          >
             <img src="/play-previous.svg" alt="Reproduzir anterior" />
           </button>
 
@@ -113,7 +119,11 @@ export default function Player() {
             }
           </button>
 
-          <button type="button" disabled={!episode}>
+          <button
+            type="button"
+            disabled={!episode}
+            onClick={playNext}
+          >
             <img src="/play-next.svg" alt="Reproduzir proximo" />
           </button>
 

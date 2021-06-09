@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Episode, parseToEpisode } from '../../models/Episode';
@@ -31,6 +32,10 @@ export default function EpisodePage({ episode }: EpisodeProps) {
 
   return (
     <div className={styles.episodeContainer}>
+      <Head>
+        <title>{episode.name} | Podcastr</title>
+      </Head>
+
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button type="button">

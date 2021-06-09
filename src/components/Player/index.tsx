@@ -152,7 +152,7 @@ export default function Player() {
 
           <button
             type="button"
-            disabled={!episode || (!hasNext && !isShuffling)}
+            disabled={!episode || !hasNext}
             onClick={playNext}
           >
             <img src="/play-next.svg" alt="Reproduzir proximo" />

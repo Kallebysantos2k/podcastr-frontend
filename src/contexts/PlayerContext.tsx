@@ -36,7 +36,7 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
   const [episodeList, setEpisodeList] = useState([]);
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
 
-  const hasNext = (currentEpisodeIndex + 1) < episodeList.length;
+  const hasNext = isShuffling || (currentEpisodeIndex + 1) < episodeList.length;
   const hasPrevious = currentEpisodeIndex > 0;
 
   function play(episode: Episode) {
@@ -52,7 +52,7 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
   }
 
   function playNext() {
-    if (!isShuffling && !hasNext) return;
+    if (!hasNext) return;
 
     const nextEpisodeIndex = (isShuffling)
       ? Math.floor(Math.random() * episodeList.length)

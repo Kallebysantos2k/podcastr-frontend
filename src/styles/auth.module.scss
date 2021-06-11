@@ -1,0 +1,42 @@
+.authContainer {
+  display: flex;
+  height: 100vh;
+
+  aside {
+    padding: 6rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    color: var(--white);
+    background-color: var(--purple-500);
+
+    h1 {
+      color: var(--white); 
+    }
+  }
+
+  main {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem;
+
+
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      button {
+        color: var(--purple-500);
+        border: none;
+        background-color: transparent;
+      }
+    }
+  }
+}

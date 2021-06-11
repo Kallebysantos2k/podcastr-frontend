@@ -1,0 +1,36 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  span {
+    padding-left: 0.3rem;
+
+    position: absolute;
+    top: 50%;
+
+    font-size: 0.8rem;
+    
+    transform: translate(0, -50%) scale(1);
+    transition: all 0.2s ease-out;
+
+    &.isActive {
+      padding: 0;
+      top: 0;
+      transform: translate(0, -100%) scale(0.95); 
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: 0.3rem;
+
+    color: var(--gray-800);
+    border: 1px solid var(--gray-100);
+    border-radius: 0.3rem;
+  
+    &:focus {
+      outline: 1px solid var(--purple-500);
+    }
+  }
+}

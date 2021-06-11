@@ -27,6 +27,7 @@
         "import/extensions": "off",
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/control-has-associated-label": "off",
+        "jsx-a11y/label-has-associated-control": "off",
         "react/jsx-one-expression-per-line": "off",
         "jsx-a11y/media-has-caption": "off",
         "no-unused-expressions": "off",

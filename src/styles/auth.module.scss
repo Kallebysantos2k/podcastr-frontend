@@ -1,9 +1,10 @@
 .authContainer {
-  display: flex;
   height: 100vh;
 
+  display: flex;
+
   aside {
-    padding: 6rem;
+    padding: 5rem;
 
     display: flex;
     flex-direction: column;
@@ -18,6 +19,7 @@
   }
 
   main {
+    min-width: 50%;
     flex: 1;
 
     display: flex;
@@ -37,6 +39,26 @@
         border: none;
         background-color: transparent;
       }
+    }
+  }
+}
+
+
+@media(max-width: 720px){
+  .authContainer {
+    height: 200vh;
+    flex-direction: column-reverse;
+
+    aside {
+      width: 100%;
+      padding: 3rem;
+      height: 100vh;
+      
+    }
+
+    main {
+      width: 100%;
+      height: 100vh;
     }
   }
 }

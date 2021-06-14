@@ -1,36 +1,15 @@
 import '../styles/globals.scss';
-import React, { useContext } from 'react';
-import styles from '../styles/app.module.scss';
+import React from 'react';
 
-import { PlayerContextProvider } from '../contexts/PlayerContext';
-import Header from '../components/Header';
-import Player from '../components/Player';
-import Auth from './auth';
-import { AuthContext, AuthContextProvider } from '../contexts/AuthContext';
+import { AuthContextProvider } from '../contexts/AuthContext';
+import MainApp from '../layouts/MainApp';
 
 function MyApp({ Component, pageProps }) {
-  const { isAuthenticated } = useContext(AuthContext);
-
   return (
     <AuthContextProvider>
-      <div>
-        {
-        (isAuthenticated)
-          ? (
-            <PlayerContextProvider>
-              <div className={styles.wrapper}>
-                <main>
-                  <Header />
-                  <Component {...pageProps} />
-                </main>
-
-                <Player />
-              </div>
-            </PlayerContextProvider>
-          )
-          : (<Auth />)
-        }
-      </div>
+      <MainApp>
+        <Component {...pageProps} />
+      </MainApp>
     </AuthContextProvider>
   );
 }

@@ -24,27 +24,36 @@ export default function SignIn() {
   }
 
   return (
-    <form
-      className={styles.formContainer}
-      onSubmit={(e) => handleSubmit(e)}
-    >
-      <InputArea
-        name="email"
-        label="Seu email:"
-        type="email"
-        value={email}
-        onChange={(e) => handleEmailInputChange(e)}
-      />
+    <div className={styles.signInContainer}>
+      <h2>Entre com sua conta</h2>
 
-      <InputArea
-        name="password"
-        label="Sua senha:"
-        type="password"
-        value={password}
-        onChange={(e) => handlePasswordInputChange(e)}
-      />
+      <form
+        className={styles.formContainer}
+        onSubmit={(e) => handleSubmit(e)}
+      >
+        <InputArea
+          name="email"
+          label="Seu email:"
+          type="email"
+          value={email}
+          onChange={(e) => handleEmailInputChange(e)}
+        />
 
-      <button type="submit">ok</button>
-    </form>
+        <InputArea
+          name="password"
+          label="Sua senha:"
+          type="password"
+          value={password}
+          onChange={(e) => handlePasswordInputChange(e)}
+        />
+
+        <button
+          className={styles.submitButton}
+          type="submit"
+        >
+          Entrar
+        </button>
+      </form>
+    </div>
   );
 }

@@ -22,5 +22,9 @@
 
     border: none;
     background-color: var(--purple-500);
+
+    &:hover {
+      filter: brightness(0.9);
+    }
   }
 }

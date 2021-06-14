@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import { SignIn, SignUp } from '../components/AuthForm';
 import styles from '../styles/auth.module.scss';
+import { useAuth } from '../contexts/AuthContext';
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'podcastr.token': token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/home',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 export default function Auth() {
+  const { isAuthenticated } = useAuth();
   const [isSignIn, setIsSignIn] = useState(false);
 
   function toggleSignOperation() {
     setIsSignIn(!isSignIn);
   }
 
-  return (
+  return !isAuthenticated && (
     <div className={styles.authContainer}>
 
       <aside>

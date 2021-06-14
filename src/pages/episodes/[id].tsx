@@ -1,7 +1,8 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { parseCookies } from 'nookies';
 import { Episode, parseToEpisode } from '../../models/Episode';
 import api from '../../services/api';
 import styles from './styles.module.scss';
@@ -11,12 +12,20 @@ interface EpisodeProps {
   episode: Episode,
 }
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: [],
-  fallback: 'blocking',
-});
+export const getServerSideProps: GetServerSideProps<EpisodeProps> = async (ctx) => {
+  const { 'podcastr.token': token } = parseCookies(ctx);
 
-export const getStaticProps: GetStaticProps<EpisodeProps> = async (ctx) => {
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  api.defaults.headers.Authorization = `Bearer ${token}`;
+
   const { id } = ctx.params;
   const { data } = await api.get(`podcast/${id}`);
 

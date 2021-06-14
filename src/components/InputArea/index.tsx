@@ -3,12 +3,12 @@ import styles from './styles.module.scss';
 
 interface InputAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string,
-  name: string,
-  value: string,
+  value?: string,
+  otherProps?: any,
 }
 
 export default function InputArea({
-  name, label, value, ...defaultProps
+  name, label, value, otherProps, ...defaultProps
 }: InputAreaProps) {
   const [isActive, setIsActive] = useState(false);
   const [internalValue, setInternalValue] = useState(value);
@@ -37,10 +37,10 @@ export default function InputArea({
       </span>
 
       <input
-        id={name}
         value={internalValue}
-        {...defaultProps}
         onChange={handleInputChange}
+        {...defaultProps}
+        {...otherProps}
       />
     </label>
   );

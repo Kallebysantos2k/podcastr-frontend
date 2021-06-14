@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../contexts/AuthContext';
 import InputArea from '../InputArea';
 import styles from './styles.module.scss';
 
 export default function SignIn() {
   const { register, handleSubmit } = useForm();
+  const { signIn } = useContext(AuthContext);
 
   function handleSignIn(data) {
+    signIn(data);
     console.log(data);
   }
 

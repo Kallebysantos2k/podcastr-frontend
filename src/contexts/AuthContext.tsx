@@ -4,6 +4,7 @@ import { setCookie, parseCookies } from 'nookies';
 import {
   createContext, ReactNode, useContext, useEffect, useState,
 } from 'react';
+import api from '../services/api';
 
 interface User {
   id: number,
@@ -33,9 +34,9 @@ export const AuthContext = createContext({} as AuthContextData);
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [userInfo, setUserInfo] = useState<User | null>(null);
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!userInfo;
 
   useEffect(() => {
     const { 'podcastr.token': token } = parseCookies();
@@ -44,7 +45,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
     axios.get('http://127.0.0.1:8000/user', {
       headers: { authorization: `Bearer ${token}` },
-    }).then((response) => setUser(response.data));
+    }).then((response) => setUserInfo(response.data));
   }, []);
 
   async function signIn({ email, password }: signInData) {
@@ -53,8 +54,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       password,
     });
 
-    setUser(data.user);
-    setCookie(undefined, 'podcastr.token', data.token, {
+    const { user, token } = data;
+
+    setUserInfo(user);
+    setCookie(undefined, 'podcastr.token', token, {
       maxAge: 3600 * 1, // 1 hour
     });
 
@@ -63,7 +66,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   return (
     <AuthContext.Provider value={{
-      user,
+      user: userInfo,
       isAuthenticated,
       signIn,
     }}

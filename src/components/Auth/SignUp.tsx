@@ -37,7 +37,7 @@ export default function SignUp() {
           className={styles.submitButton}
           type="submit"
         >
-          Entrar
+          Criar conta
         </button>
       </form>
     </div>

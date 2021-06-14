@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import SignIn from '../components/SignIn';
-import SignUp from '../components/SignUp';
+import { SignIn, SignUp } from '../components/Auth';
 import styles from '../styles/auth.module.scss';
 
 export default function Auth() {

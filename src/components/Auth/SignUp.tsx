@@ -11,7 +11,7 @@ export default function SignUp() {
   }
 
   return (
-    <div className={styles.signUpContainer}>
+    <div className={styles.formContainer}>
       <h2>Crie uma nova conta</h2>
 
       <form onSubmit={handleSubmit(handleSignUp)}>

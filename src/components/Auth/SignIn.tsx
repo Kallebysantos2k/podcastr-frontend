@@ -11,7 +11,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className={styles.signInContainer}>
+    <div className={styles.formContainer}>
       <h2>Entre com sua conta</h2>
 
       <form onSubmit={handleSubmit(handleSignIn)}>

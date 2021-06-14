@@ -1,5 +1,6 @@
 import React from 'react';
-import { GetStaticPropsResult } from 'next';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,7 +14,20 @@ interface HomeProps {
   allEpisodes: [Episode],
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>> {
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (ctx) => {
+  const { 'podcastr.token': token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  api.defaults.headers.Authorization = `Bearer ${token}`;
+
   const { data } = await api.get('podcast/');
 
   const parsedData = data.map(parseToEpisode);
@@ -24,9 +38,8 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>>
       latestEpisodes: episodes.slice(0, 2),
       allEpisodes: episodes.slice(2, episodes.length),
     },
-    revalidate: 60 * 2,
   };
-}
+};
 
 export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
   const { playList } = usePlayer();

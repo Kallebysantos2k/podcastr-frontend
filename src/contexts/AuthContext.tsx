@@ -61,6 +61,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       maxAge: 3600 * 1, // 1 hour
     });
 
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
     Router.push('/home');
   }
 

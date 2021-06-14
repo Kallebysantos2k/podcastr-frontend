@@ -1,50 +1,30 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import InputArea from '../InputArea';
 import styles from './styles.module.scss';
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit } = useForm();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    console.log(email, password);
-  }
-
-  function handleEmailInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target;
-
-    setEmail(value);
-  }
-
-  function handlePasswordInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target;
-
-    setPassword(value);
+  function handleSignIn(data) {
+    console.log(data);
   }
 
   return (
     <div className={styles.signInContainer}>
       <h2>Entre com sua conta</h2>
 
-      <form
-        className={styles.formContainer}
-        onSubmit={(e) => handleSubmit(e)}
-      >
+      <form onSubmit={handleSubmit(handleSignIn)}>
         <InputArea
-          name="email"
-          label="Seu email:"
+          label="Endereço de email:"
           type="email"
-          value={email}
-          onChange={(e) => handleEmailInputChange(e)}
+          otherProps={register('email')}
         />
 
         <InputArea
-          name="password"
           label="Sua senha:"
           type="password"
-          value={password}
-          onChange={(e) => handlePasswordInputChange(e)}
+          otherProps={register('password')}
         />
 
         <button

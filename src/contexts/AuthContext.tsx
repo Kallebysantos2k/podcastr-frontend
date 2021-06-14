@@ -1,7 +1,9 @@
 import axios from 'axios';
 import Router from 'next/router';
 import { setCookie } from 'nookies';
-import { createContext, ReactNode, useState } from 'react';
+import {
+  createContext, ReactNode, useContext, useState,
+} from 'react';
 
 interface User {
   id: number,
@@ -27,6 +29,8 @@ interface AuthContextProviderProps {
 }
 
 export const AuthContext = createContext({} as AuthContextData);
+
+export const useAuth = () => useContext(AuthContext);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User | null>(null);

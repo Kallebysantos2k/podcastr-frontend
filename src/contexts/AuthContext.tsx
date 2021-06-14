@@ -1,8 +1,8 @@
 import axios from 'axios';
 import Router from 'next/router';
-import { setCookie } from 'nookies';
+import { setCookie, parseCookies } from 'nookies';
 import {
-  createContext, ReactNode, useContext, useState,
+  createContext, ReactNode, useContext, useEffect, useState,
 } from 'react';
 
 interface User {
@@ -36,6 +36,16 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    const { 'podcastr.token': token } = parseCookies();
+
+    if (!token) return;
+
+    axios.get('http://127.0.0.1:8000/user', {
+      headers: { authorization: `Bearer ${token}` },
+    }).then((response) => setUser(response.data));
+  }, []);
 
   async function signIn({ email, password }: signInData) {
     const { data } = await axios.post('http://127.0.0.1:8000/auth/sign-in', {

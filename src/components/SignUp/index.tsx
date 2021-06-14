@@ -1,65 +1,36 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import InputArea from '../InputArea';
 import styles from './styles.module.scss';
 
 export default function SignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit } = useForm();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    console.log(name, email, password);
-  }
-
-  function handleNameInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target;
-
-    setName(value);
-  }
-
-  function handleEmailInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target;
-
-    setEmail(value);
-  }
-
-  function handlePasswordInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target;
-
-    setPassword(value);
+  function handleSignUp(data) {
+    console.log(data);
   }
 
   return (
     <div className={styles.signUpContainer}>
       <h2>Crie uma nova conta</h2>
 
-      <form
-        className={styles.formContainer}
-        onSubmit={(e) => handleSubmit(e)}
-      >
+      <form onSubmit={handleSubmit(handleSignUp)}>
         <InputArea
-          name="name"
           label="Nome de utilizador:"
           type="text"
-          value={name}
-          onChange={(e) => handleNameInputChange(e)}
+          otherProps={register('name')}
         />
 
         <InputArea
-          name="email"
           label="Endereço de email:"
           type="email"
-          value={email}
-          onChange={(e) => handleEmailInputChange(e)}
+          otherProps={register('email')}
         />
 
         <InputArea
-          name="password"
           label="Sua senha:"
           type="password"
-          value={password}
-          onChange={(e) => handlePasswordInputChange(e)}
+          otherProps={register('password')}
         />
 
         <button

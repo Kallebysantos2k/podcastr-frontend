@@ -27,6 +27,7 @@ interface signUpData {
 
 interface AuthContextData {
   user: User,
+  isAdmin: boolean
   isAuthenticated: boolean,
   signIn: (data: signInData) => Promise<void>,
   signUp: (data: signUpData) => Promise<void>,
@@ -45,6 +46,7 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [userInfo, setUserInfo] = useState<User | null>(null);
 
+  const isAdmin = !!userInfo?.roles.filter((role) => role === 'ROLE_ADMIN')[0];
   const isAuthenticated = !!userInfo;
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }
 
   async function signUp({ name, email, password }: signUpData) {
-    const { data } = await axios.post(`${hostname}/auth/sign-up`, {
+    await axios.post(`${hostname}/auth/sign-up`, {
       name,
       email,
       password,
@@ -88,6 +90,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   return (
     <AuthContext.Provider value={{
       user: userInfo,
+      isAdmin,
       isAuthenticated,
       signIn,
       signUp,

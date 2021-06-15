@@ -5,7 +5,7 @@ import InputArea from '../InputArea';
 import styles from './styles.module.scss';
 
 export default function SignIn() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
   const { signIn } = useContext(AuthContext);
 
   function handleSignIn(data) {
@@ -19,14 +19,18 @@ export default function SignIn() {
 
       <form onSubmit={handleSubmit(handleSignIn)}>
         <InputArea
-          label="Endereço de email:"
+          name="email"
           type="email"
+          label="Endereço de email:"
+          control={control}
           otherProps={register('email')}
         />
 
         <InputArea
-          label="Sua senha:"
+          name="password"
           type="password"
+          label="Sua senha:"
+          control={control}
           otherProps={register('password')}
         />
 

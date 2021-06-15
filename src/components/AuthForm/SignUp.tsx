@@ -4,7 +4,7 @@ import InputArea from '../InputArea';
 import styles from './styles.module.scss';
 
 export default function SignUp() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
 
   function handleSignUp(data) {
     console.log(data);
@@ -16,20 +16,26 @@ export default function SignUp() {
 
       <form onSubmit={handleSubmit(handleSignUp)}>
         <InputArea
-          label="Nome de utilizador:"
+          name="name"
           type="text"
+          label="Nome de utilizador:"
+          control={control}
           otherProps={register('name')}
         />
 
         <InputArea
-          label="Endereço de email:"
+          name="email"
           type="email"
+          label="Endereço de email:"
+          control={control}
           otherProps={register('email')}
         />
 
         <InputArea
-          label="Sua senha:"
+          name="password"
           type="password"
+          label="Sua senha:"
+          control={control}
           otherProps={register('password')}
         />
 

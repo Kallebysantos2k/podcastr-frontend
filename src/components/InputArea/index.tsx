@@ -1,29 +1,24 @@
-import { InputHTMLAttributes, useState } from 'react';
+import { InputHTMLAttributes, useEffect, useState } from 'react';
+import { Control, useWatch } from 'react-hook-form';
 import styles from './styles.module.scss';
 
 interface InputAreaProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string,
   label: string,
-  value?: string,
+  control?: Control,
   otherProps?: any,
 }
 
 export default function InputArea({
-  name, label, value, otherProps, ...defaultProps
+  name, label, control, otherProps, ...defaultProps
 }: InputAreaProps) {
   const [isActive, setIsActive] = useState(false);
-  const [internalValue, setInternalValue] = useState(value);
 
-  function handleInputChange(event) {
-    if (defaultProps.onChange) defaultProps.onChange(event);
-
-    const input = event.target.value;
-
-    setInternalValue(input);
-    setIsActive(input !== '');
-  }
+  const input = useWatch({ control, name });
+  useEffect(() => setIsActive(!!input), [input]);
 
   function handleLoseFocus() {
-    setIsActive(internalValue !== '');
+    setIsActive(!!input);
   }
 
   return (
@@ -37,8 +32,6 @@ export default function InputArea({
       </span>
 
       <input
-        value={internalValue}
-        onChange={handleInputChange}
         {...defaultProps}
         {...otherProps}
       />

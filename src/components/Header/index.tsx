@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <header className={styles.headerContainer}>
-      <Link href="/">
+      <Link href="/home">
         <a><img src="/logo.svg" alt="Logo Podcastr" /></a>
       </Link>
 

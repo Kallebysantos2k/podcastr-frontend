@@ -4,15 +4,8 @@ import { setCookie, parseCookies } from 'nookies';
 import {
   createContext, ReactNode, useContext, useEffect, useState,
 } from 'react';
+import { User } from '../models/User';
 import api from '../services/api';
-
-interface User {
-  id: number,
-  name: string,
-  email: string,
-  imageUrl: string,
-  roles: [string]
-}
 
 interface signInData {
   email: string,

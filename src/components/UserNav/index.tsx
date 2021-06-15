@@ -24,21 +24,15 @@ export default function UserNav() {
 
       {
         isActive && (
-          <main>
-            <nav>
-              <button type="button">
-                Meu perfil
-              </button>
+          <nav>
+            <ul>
+              <li>Meu perfil</li>
 
-              <button type="button">
-                Dashboard
-              </button>
+              <li>Dashboard</li>
 
-              <button type="button">
-                Encerrar sessão
-              </button>
-            </nav>
-          </main>
+              <li>Encerrar sessão</li>
+            </ul>
+          </nav>
         )
       }
     </div>

@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './styles.module.scss';
 
 export default function UserNav() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, logout } = useAuth();
   const [isActive, setIsActive] = useState(false);
 
   function toogleIsActive() {
@@ -12,11 +12,14 @@ export default function UserNav() {
   }
 
   return (
-    <div className={styles.userNavContainer}>
+    <div
+      className={styles.userNavContainer}
+      onMouseLeave={() => setIsActive(false)}
+    >
       <button
         type="button"
         onClick={toogleIsActive}
-        onBlur={() => setIsActive(false)}
+
       >
         <span>
           <FaUserCircle />
@@ -35,7 +38,9 @@ export default function UserNav() {
                 )
               }
 
-              <li>Encerrar sessão</li>
+              <li onClick={logout}>
+                Encerrar sessão
+              </li>
             </ul>
           </nav>
         )

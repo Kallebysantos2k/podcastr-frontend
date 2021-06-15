@@ -11,16 +11,15 @@ export default function UserNav() {
 
   return (
     <div className={styles.userNavContainer}>
-      <header>
-        <button
-          type="button"
-          onClick={toogleIsActive}
-        >
-          <span>
-            <FaUserCircle />
-          </span>
-        </button>
-      </header>
+      <button
+        type="button"
+        onClick={toogleIsActive}
+        onBlur={() => setIsActive(false)}
+      >
+        <span>
+          <FaUserCircle />
+        </span>
+      </button>
 
       {
         isActive && (

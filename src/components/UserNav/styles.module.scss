@@ -9,12 +9,14 @@
   button {
     border: none;
     background: none;
-  }
 
-  header {
     span {
       font-size: 2rem;
-      color: var(--purple-500);
+      color: var(--purple-400);
+
+      &:hover {
+        color: var(--purple-500)
+      }
     }
   }
 

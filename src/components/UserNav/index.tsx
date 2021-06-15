@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from './styles.module.scss';
 
 export default function UserNav() {
+  const { isAdmin } = useAuth();
   const [isActive, setIsActive] = useState(false);
 
   function toogleIsActive() {
@@ -27,7 +29,11 @@ export default function UserNav() {
             <ul>
               <li>Meu perfil</li>
 
-              <li>Dashboard</li>
+              {
+                isAdmin && (
+                  <li>Dashboard</li>
+                )
+              }
 
               <li>Encerrar sessão</li>
             </ul>

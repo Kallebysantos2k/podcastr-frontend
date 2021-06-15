@@ -1,13 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../contexts/AuthContext';
 import InputArea from '../InputArea';
 import styles from './styles.module.scss';
 
 export default function SignUp() {
+  const { signUp } = useAuth();
   const { register, handleSubmit, control } = useForm();
 
   function handleSignUp(data) {
-    console.log(data);
+    signUp(data);
   }
 
   return (

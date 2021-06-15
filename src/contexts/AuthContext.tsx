@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Router from 'next/router';
-import { setCookie, parseCookies } from 'nookies';
+import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import {
   createContext, ReactNode, useContext, useEffect, useState,
 } from 'react';
@@ -24,6 +24,7 @@ interface AuthContextData {
   isAuthenticated: boolean,
   signIn: (data: signInData) => Promise<void>,
   signUp: (data: signUpData) => Promise<void>,
+  logout: () => void,
 }
 
 interface AuthContextProviderProps {
@@ -62,6 +63,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
     setUserInfo(user);
     setCookie(undefined, 'podcastr.token', token, {
+      sameSite: true,
       maxAge: 3600 * 1, // 1 hour
     });
 
@@ -80,6 +82,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     await signIn({ email, password });
   }
 
+  function logout() {
+    destroyCookie(undefined, 'podcastr.token', {
+      sameSite: true,
+    });
+    setUserInfo(null);
+    Router.push('/');
+  }
+
   return (
     <AuthContext.Provider value={{
       user: userInfo,
@@ -87,6 +97,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       isAuthenticated,
       signIn,
       signUp,
+      logout,
     }}
     >
       {children}

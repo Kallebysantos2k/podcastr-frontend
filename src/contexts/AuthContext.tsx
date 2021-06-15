@@ -19,15 +19,24 @@ interface signInData {
   password: string
 }
 
+interface signUpData {
+  name: string,
+  email: string,
+  password: string
+}
+
 interface AuthContextData {
   user: User,
   isAuthenticated: boolean,
   signIn: (data: signInData) => Promise<void>,
+  signUp: (data: signUpData) => Promise<void>,
 }
 
 interface AuthContextProviderProps {
   children: ReactNode,
 }
+
+const hostname = process.env.NEXT_PUBLIC_API_HOST;
 
 export const AuthContext = createContext({} as AuthContextData);
 
@@ -43,13 +52,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
     if (!token) return;
 
-    axios.get('http://127.0.0.1:8000/user', {
+    axios.get(`${hostname}/user`, {
       headers: { authorization: `Bearer ${token}` },
     }).then((response) => setUserInfo(response.data));
   }, []);
 
   async function signIn({ email, password }: signInData) {
-    const { data } = await axios.post('http://127.0.0.1:8000/auth/sign-in', {
+    const { data } = await axios.post(`${hostname}/auth/sign-in`, {
       username: email,
       password,
     });
@@ -66,11 +75,22 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     Router.push('/home');
   }
 
+  async function signUp({ name, email, password }: signUpData) {
+    const { data } = await axios.post(`${hostname}/auth/sign-up`, {
+      name,
+      email,
+      password,
+    });
+
+    console.log(data);
+  }
+
   return (
     <AuthContext.Provider value={{
       user: userInfo,
       isAuthenticated,
       signIn,
+      signUp,
     }}
     >
       {children}

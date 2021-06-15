@@ -7,7 +7,6 @@ export default function UserNav() {
 
   function toogleIsActive() {
     setIsActive(!isActive);
-    console.log(isActive);
   }
 
   return (
@@ -23,7 +22,25 @@ export default function UserNav() {
         </button>
       </header>
 
-      <main />
+      {
+        isActive && (
+          <main>
+            <nav>
+              <button type="button">
+                Meu perfil
+              </button>
+
+              <button type="button">
+                Dashboard
+              </button>
+
+              <button type="button">
+                Encerrar sessão
+              </button>
+            </nav>
+          </main>
+        )
+      }
     </div>
   );
 }

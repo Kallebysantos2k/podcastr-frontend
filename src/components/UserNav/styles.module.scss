@@ -1,0 +1,16 @@
+.userNavContainer{
+  padding: 1rem;
+  
+  header {
+    button {
+      border: none;
+      background: none;
+      font-size: 0;
+    }
+
+    span {
+      font-size: 2rem;
+      color: var(--purple-500);
+    }
+  }
+}

@@ -82,7 +82,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       password,
     });
 
-    console.log(data);
+    await signIn({ email, password });
   }
 
   return (

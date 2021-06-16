@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { Episode } from '../../../models/Episode';
 import styles from './styles.module.scss';
 
@@ -10,8 +11,10 @@ interface DashboardTableItemProps {
 }
 
 export default function DashboardTableItem({ episode }: DashboardTableItemProps) {
-  function handleClick() {
-    console.log(episode.id);
+  const [isActive, setIsActive] = useState(false);
+
+  function toogleIsActive() {
+    setIsActive(!isActive);
   }
 
   return (
@@ -36,14 +39,42 @@ export default function DashboardTableItem({ episode }: DashboardTableItemProps)
       <td>{episode.publishedAt}</td>
       <td>{episode.timeString}</td>
       <td>
-        <button
-          type="button"
-          onClick={handleClick}
+        <div
+          className={styles.episodeOptionsContainer}
+          // onMouseLeave={() => setIsActive(false)}
         >
-          <span>
-            <BsThreeDots />
-          </span>
-        </button>
+          <button
+            type="button"
+            onClick={toogleIsActive}
+            className={isActive ? styles.isActive : ''}
+          >
+            <span>
+              <BsThreeDots />
+            </span>
+          </button>
+
+          {
+            isActive && (
+              <nav>
+                <span
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => console.log('ok')}
+                >
+                  <MdEdit />
+                </span>
+
+                <span
+                  role="button"
+                  tabIndex={-1}
+                  onClick={() => console.log('ok')}
+                >
+                  <MdDelete />
+                </span>
+              </nav>
+            )
+          }
+        </div>
       </td>
     </tr>
   );

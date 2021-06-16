@@ -6,6 +6,7 @@ import { DashboardTable } from '../../components/DashboardTable';
 import { Episode, parseToEpisode } from '../../models/Episode';
 import { User } from '../../models/User';
 import api from '../../services/api';
+import styles from '../../styles/dashboard.module.scss';
 
 interface DashboardProps {
   allEpisodes: [Episode]
@@ -57,7 +58,7 @@ export default function Dashboard({ allEpisodes }: DashboardProps) {
   }, []); */
 
   return (
-    <div>
+    <div className={styles.dashboardContainer}>
       <DashboardTable episodes={episodes} />
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { FaUserCircle } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './styles.module.scss';
@@ -34,7 +35,11 @@ export default function UserNav() {
 
               {
                 isAdmin && (
-                  <li>Dashboard</li>
+                  <Link href="/dashboard">
+                    <li>
+                      <a>Dashboard</a>
+                    </li>
+                  </Link>
                 )
               }
 

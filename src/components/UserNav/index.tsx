@@ -20,7 +20,6 @@ export default function UserNav() {
       <button
         type="button"
         onClick={toogleIsActive}
-
       >
         <span>
           <FaUserCircle />

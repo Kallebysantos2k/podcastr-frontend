@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { DashboardTable } from '../../components/DashboardTable';
+
 import { Episode, parseToEpisode } from '../../models/Episode';
 import { User } from '../../models/User';
 import api from '../../services/api';
@@ -51,53 +51,14 @@ export const getServerSideProps: GetServerSideProps<DashboardProps> = async (ctx
 export default function Dashboard({ allEpisodes }: DashboardProps) {
   const [episodes, setEpisodes] = useState(allEpisodes);
 
+  /*   useEffect(() => {
+    const filter = episodes.filter((episode) => episode.id === 13) as [Episode];
+    setEpisodes(filter);
+  }, []); */
+
   return (
     <div>
-      <section>
-        <h2>Todos episodios</h2>
-
-        <table cellSpacing={0}>
-          <thead>
-            <tr>
-              <th />
-              <th>Id</th>
-              <th>Podcast</th>
-              <th>Data</th>
-              <th />
-            </tr>
-          </thead>
-
-          <tbody>
-            {episodes.map((episode) => (
-              <tr key={episode.id}>
-                <td>
-                  <Image
-                    width={120}
-                    height={120}
-                    src={episode.thumbnail}
-                    alt={episode.name}
-                  />
-                </td>
-
-                <td>{episode.id}</td>
-
-                <td>
-                  <Link href={`/episodes/${episode.id}`}>
-                    <a>{episode.name}</a>
-                  </Link>
-                </td>
-
-                <td>{episode.publishedAt}</td>
-                <td>
-                  <button type="button">
-                    <img src="/play-green.svg" alt="Reproduzir episodio" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <DashboardTable episodes={episodes} />
     </div>
   );
 }

@@ -30,8 +30,14 @@
       border-radius: 0.675rem;
       background-color: var(--white);
 
+      transition: filter 0.2s;
+
       span {
         font-size: 0.8rem;
+      }
+
+      &:hover {
+        filter: brightness(0.95);
       }
     }
   }
@@ -55,8 +61,14 @@
       border-radius: 0.675rem;
       background-color: var(--white);
 
+      transition: filter 0.2s;
+      
       span {
         font-size: 0.8rem;
+      }
+
+      &:hover {
+        filter: brightness(0.95);
       }
     }
   }
@@ -93,6 +105,12 @@
       border: 1px solid var(--gray-100);
       border-radius: 0.3rem;
       background-color: var(--white);
+
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: brightness(0.95);
+      }
     }
 
     &.isUploadActive {

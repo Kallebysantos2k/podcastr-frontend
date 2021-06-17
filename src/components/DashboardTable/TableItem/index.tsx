@@ -41,7 +41,7 @@ export default function DashboardTableItem({ episode }: DashboardTableItemProps)
       <td>
         <div
           className={styles.episodeOptionsContainer}
-          // onMouseLeave={() => setIsActive(false)}
+          onMouseLeave={() => setIsActive(false)}
         >
           <button
             type="button"

@@ -1,8 +1,9 @@
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { useState } from 'react';
+import { BsPlus } from 'react-icons/bs';
 import { DashboardTable } from '../../components/DashboardTable';
-
 import { Episode, parseToEpisode } from '../../models/Episode';
 import { User } from '../../models/User';
 import api from '../../services/api';
@@ -55,10 +56,21 @@ export default function Dashboard({ allEpisodes }: DashboardProps) {
   /*   useEffect(() => {
     const filter = episodes.filter((episode) => episode.id === 13) as [Episode];
     setEpisodes(filter);
-  }, []); */
+  }, []);
+
+  */
 
   return (
     <div className={styles.dashboardContainer}>
+      <header>
+        <h2>Todos episodios</h2>
+        <Link href="/dashboard/episode/new">
+          <a>
+            <BsPlus />
+          </a>
+        </Link>
+      </header>
+
       <DashboardTable episodes={episodes} />
     </div>
   );

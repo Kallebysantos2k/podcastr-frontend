@@ -10,8 +10,6 @@ interface DashboardTableProps {
 export default function DashboardTable({ episodes }: DashboardTableProps) {
   return (
     <section className={styles.episodesContainer}>
-      <h2>Todos episodios</h2>
-
       <table cellSpacing={0}>
         <thead>
           <tr>

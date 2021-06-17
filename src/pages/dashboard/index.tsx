@@ -64,7 +64,7 @@ export default function Dashboard({ allEpisodes }: DashboardProps) {
     <div className={styles.dashboardContainer}>
       <header>
         <h2>Todos episodios</h2>
-        <Link href="/dashboard/episode/new">
+        <Link href="/dashboard/newEpisode">
           <a>
             <BsPlus />
           </a>

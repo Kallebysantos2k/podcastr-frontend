@@ -6,17 +6,41 @@
   margin: 0 auto;
   overflow-y: scroll;
 
-  h2 {
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
-  }
+  header {
+    margin-top: 2rem;
 
+    h2 {
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    a {
+      max-width: 5rem;
+      padding: 0.5rem 0.8rem;
+
+      text-decoration: none;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 0.3rem;
+
+      color: var(--purple-500);
+
+      border: 1px solid var(--gray-100);
+      border-radius: 0.675rem;
+      background-color: var(--white);
+
+      span {
+        font-size: 0.8rem;
+      }
+    }
+  }
 
   footer {
     margin-top: 2rem;
 
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 
     button {
       padding: 0.5rem 0.8rem;
@@ -39,10 +63,12 @@
 }
 
 .uploadButtons {
+  width: 100%;
   margin-top: 1rem;
 
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 1rem 3rem;
 
   font-size: 0.8rem;
@@ -50,23 +76,44 @@
 
   label {
     flex: 1;
-  }
 
-  input {
-    display: none;
-  }
+    input {
+      display: none;
+    }
+  
+    div {
+      min-width: 15rem;
+      padding: 0.5rem 0.8rem;
+      cursor: pointer;
+  
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  
+      border: 1px solid var(--gray-100);
+      border-radius: 0.3rem;
+      background-color: var(--white);
+    }
 
-  div {
-    min-width: 15rem;
-    padding: 0.5rem 0.8rem;
-    cursor: pointer;
+    &.isUploadActive {
+      flex: none;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border: 1px solid var(--gray-100);
-    border-radius: 0.3rem;
-    background-color: var(--white);
+      div {
+        width: 0;
+      
+        span {
+          max-width: 80%;
+          
+          overflow: hidden;
+          white-space: nowrap;
+          
+          font-size: 0.875rem;
+          text-overflow: ellipsis;
+        }
+  
+        color: var(--white);
+        background-color: var(--purple-300);
+      }
+    }
   }
 }

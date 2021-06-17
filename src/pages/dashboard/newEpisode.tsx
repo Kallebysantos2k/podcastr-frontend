@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Link from 'next/link';
 import {
   MdArrowBack, MdArrowForward, MdAudiotrack, MdImage,
 } from 'react-icons/md';
@@ -8,18 +9,39 @@ import styles from '../../styles/newEpisode.module.scss';
 
 export default function newEpisode() {
   const { register, handleSubmit, control } = useForm();
+  const [imageFile, setImageFile] = useState('');
+  const [audioFile, setAudioFile] = useState('');
 
   function handleNewEpisode(data) {
     console.log(data);
   }
 
+  function handleAudio(event: FormEvent<HTMLInputElement>) {
+    const filepath = event.currentTarget.value;
+    const filename = filepath.replace(/^.*[\\/]/, '');
+
+    setAudioFile(filename);
+  }
+
+  function handleImage(event: FormEvent<HTMLInputElement>) {
+    const filepath = event.currentTarget.value;
+    const filename = filepath.replace(/^.*[\\/]/, '');
+
+    setImageFile(filename);
+  }
+
   return (
     <div className={styles.newEpisodeContainer}>
 
-      <button type="button">
-        <MdArrowBack />
-      </button>
-      <h2>Adicionar episódio</h2>
+      <header>
+        <Link href="/dashboard">
+          <a>
+            <MdArrowBack />
+            <span>Voltar</span>
+          </a>
+        </Link>
+        <h2>Adicionar episódio</h2>
+      </header>
 
       <form onSubmit={handleSubmit(handleNewEpisode)}>
         <InputArea
@@ -50,28 +72,34 @@ export default function newEpisode() {
         />
 
         <div className={styles.uploadButtons}>
-          <label>
+          <label className={audioFile ? styles.isUploadActive : ''}>
             <div>
-              Ficheiro de Audio
+              <span>
+                {audioFile || 'Ficheiro de Audio'}
+              </span>
               <MdAudiotrack />
             </div>
             <input
               name="audio"
               type="file"
               required
+              onInput={handleAudio}
               {...register('audio')}
             />
           </label>
 
-          <label>
+          <label className={imageFile ? styles.isUploadActive : ''}>
             <div>
-              Miniatura
+              <span>
+                {imageFile || 'Miniatura'}
+              </span>
               <MdImage />
             </div>
             <input
               name="thumb"
               type="file"
               required
+              onInput={handleImage}
               {...register('thumb')}
             />
           </label>

@@ -101,6 +101,8 @@ export default async function createPodcast(req: VercelRequest, res: VercelRespo
   const audio = data.files.audio as File;
   const thumb = data.files.thumb as File;
 
+  console.log(data);
+
   const audioMetadata = await parseFile(audio.path);
   const { duration } = audioMetadata.format;
 

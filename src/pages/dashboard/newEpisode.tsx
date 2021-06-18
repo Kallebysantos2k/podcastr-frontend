@@ -6,14 +6,28 @@ import {
 } from 'react-icons/md';
 import InputArea from '../../components/InputArea';
 import styles from '../../styles/newEpisode.module.scss';
+import api from '../../services/api';
 
 export default function newEpisode() {
   const { register, handleSubmit, control } = useForm();
   const [imageFile, setImageFile] = useState('');
   const [audioFile, setAudioFile] = useState('');
 
-  function handleNewEpisode(data) {
+  async function handleNewEpisode(values) {
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('members', values.members);
+    formData.append('description', values.description);
+    formData.append('audio', values.audio[0]);
+    formData.append('thumb', values.thumb[0]);
+    console.log(values);
+    const defaultUri = api.defaults.baseURL;
+
+    api.defaults.baseURL = '';
+    const { data } = await api.post('/api/createPodcast', formData);
     console.log(data);
+
+    api.defaults.baseURL = defaultUri;
   }
 
   function handleAudio(event: FormEvent<HTMLInputElement>) {
@@ -45,11 +59,11 @@ export default function newEpisode() {
 
       <form onSubmit={handleSubmit(handleNewEpisode)}>
         <InputArea
-          name="title"
+          name="name"
           type="text"
           label="Titulo"
           control={control}
-          otherProps={register('title')}
+          otherProps={register('name')}
           required
         />
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../contexts/AuthContext';
+import {
+  displayErrorNotification,
+  displaySuccessNotification,
+} from '../../helpers/notificationDisplayer';
 import InputArea from '../InputArea';
 import styles from './styles.module.scss';
 
@@ -9,7 +13,15 @@ export default function SignUp() {
   const { register, handleSubmit, control } = useForm();
 
   function handleSignUp(data) {
-    signUp(data);
+    signUp(data)
+      .then((user) => displaySuccessNotification({
+        title: `Bem vindo ${user.name}`,
+        message: 'Sua conta foi criada com sucesso',
+      }))
+      .catch((error) => displayErrorNotification({
+        title: 'Erro ao criar conta',
+        message: `Não foi possivel criar sua conta, ${error}`,
+      }));
   }
 
   return (

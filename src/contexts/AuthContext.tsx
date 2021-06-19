@@ -23,7 +23,7 @@ interface AuthContextData {
   isAdmin: boolean
   isAuthenticated: boolean,
   signIn: (data: signInData) => Promise<User>,
-  signUp: (data: signUpData) => Promise<void>,
+  signUp: (data: signUpData) => Promise<User>,
   logout: () => void,
 }
 
@@ -77,14 +77,17 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       });
   }
 
-  async function signUp({ name, email, password }: signUpData) {
-    await axios.post(`${hostname}/auth/sign-up`, {
+  async function signUp({ name, email, password }: signUpData): Promise<User> {
+    return axios.post(`${hostname}/auth/sign-up`, {
       name,
       email,
       password,
-    });
-
-    await signIn({ email, password });
+    })
+      .then(() => signIn({ email, password }))
+      .catch((error) => {
+        const { message } = error?.response?.data;
+        throw new Error(message || '');
+      });
   }
 
   function logout() {

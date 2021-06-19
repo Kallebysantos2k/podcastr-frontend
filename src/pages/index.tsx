@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 export default function Auth() {
   const { isAuthenticated } = useAuth();
-  const [isSignIn, setIsSignIn] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(true);
 
   function toggleSignOperation() {
     setIsSignIn(!isSignIn);

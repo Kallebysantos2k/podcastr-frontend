@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {
   MdArrowBack, MdArrowForward, MdAudiotrack, MdImage,
 } from 'react-icons/md';
+import { store } from 'react-notifications-component';
 import InputArea from '../../components/InputArea';
 import styles from '../../styles/newEpisode.module.scss';
 import api from '../../services/api';
@@ -14,18 +15,36 @@ export default function newEpisode() {
   const [audioFile, setAudioFile] = useState('');
 
   async function handleNewEpisode(values) {
+    store.addNotification({
+      title: 'Novo episódio',
+      message: 'Estamos processando a sua requisição',
+      type: 'default', // 'default', 'success', 'info', 'warning'
+      container: 'top-right', // where to position the notifications
+      dismiss: {
+        duration: 3000,
+      },
+    });
+
     const formData = new FormData();
     formData.append('name', values.name);
     formData.append('members', values.members);
     formData.append('description', values.description);
     formData.append('audio', values.audio[0]);
     formData.append('thumb', values.thumb[0]);
-    console.log(values);
+
     const defaultUri = api.defaults.baseURL;
 
     api.defaults.baseURL = '';
     const { data } = await api.post('/api/createPodcast', formData);
-    console.log(data);
+    data && store.addNotification({
+      title: 'Novo episódio',
+      message: 'O novo episódio foi submetido com sucesso',
+      type: 'success', // 'default', 'success', 'info', 'warning'
+      container: 'top-right', // where to position the notifications
+      dismiss: {
+        duration: 3000,
+      },
+    });
 
     api.defaults.baseURL = defaultUri;
   }
@@ -46,7 +65,6 @@ export default function newEpisode() {
 
   return (
     <div className={styles.newEpisodeContainer}>
-
       <header>
         <Link href="/dashboard">
           <a>

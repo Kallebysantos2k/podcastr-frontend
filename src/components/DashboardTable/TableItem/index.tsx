@@ -1,9 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Router from 'next/router';
 import React, { useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { MdDelete, MdEdit } from 'react-icons/md';
+import { displayErrorNotification, displaySuccessNotification } from '../../../helpers/notificationDisplayer';
 import { Episode } from '../../../models/Episode';
+import api from '../../../services/api';
 import styles from './styles.module.scss';
 
 interface DashboardTableItemProps {
@@ -15,6 +18,19 @@ export default function DashboardTableItem({ episode }: DashboardTableItemProps)
 
   function toogleIsActive() {
     setIsActive(!isActive);
+  }
+
+  function deleteEpisode() {
+    api.delete(`/podcast/${episode.id}`)
+      .then(() => displaySuccessNotification({
+        title: 'Remover episódio',
+        message: 'O episódio selecionado foi removido com sucesso',
+      }))
+      .catch((error) => displayErrorNotification({
+        title: 'Remover episódio',
+        message: `Não foi possível remover o episódio selecionado ${error}`,
+      }));
+    Router.reload();
   }
 
   return (
@@ -67,7 +83,7 @@ export default function DashboardTableItem({ episode }: DashboardTableItemProps)
                 <span
                   role="button"
                   tabIndex={-1}
-                  onClick={() => console.log('ok')}
+                  onClick={deleteEpisode}
                 >
                   <MdDelete />
                 </span>

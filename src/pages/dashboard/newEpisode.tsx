@@ -4,7 +4,11 @@ import Link from 'next/link';
 import {
   MdArrowBack, MdArrowForward, MdAudiotrack, MdImage,
 } from 'react-icons/md';
-import { store } from 'react-notifications-component';
+import {
+  displayErrorNotification,
+  displayInfoNotification,
+  displaySuccessNotification,
+} from '../../helpers/notificationDisplayer';
 import InputArea from '../../components/InputArea';
 import styles from '../../styles/newEpisode.module.scss';
 import api from '../../services/api';
@@ -15,14 +19,9 @@ export default function newEpisode() {
   const [audioFile, setAudioFile] = useState('');
 
   async function handleNewEpisode(values) {
-    store.addNotification({
-      title: 'Novo episódio',
-      message: 'Estamos processando a sua requisição',
-      type: 'default', // 'default', 'success', 'info', 'warning'
-      container: 'top-right', // where to position the notifications
-      dismiss: {
-        duration: 3000,
-      },
+    displayInfoNotification({
+      title: 'Novo Episódio',
+      message: 'Os dados enviados estão a ser processados, em breve seu novo episódio estará disponivel',
     });
 
     const formData = new FormData();
@@ -35,16 +34,15 @@ export default function newEpisode() {
     const defaultUri = api.defaults.baseURL;
 
     api.defaults.baseURL = '';
-    const { data } = await api.post('/api/createPodcast', formData);
-    data && store.addNotification({
-      title: 'Novo episódio',
-      message: 'O novo episódio foi submetido com sucesso',
-      type: 'success', // 'default', 'success', 'info', 'warning'
-      container: 'top-right', // where to position the notifications
-      dismiss: {
-        duration: 3000,
-      },
-    });
+    api.post('/api/createPodcast', formData)
+      .then(({ data }) => displaySuccessNotification({
+        title: 'Novo episódio',
+        message: `Episódio ${data.result.name} foi submetido com sucesso`,
+      }))
+      .catch((error) => displayErrorNotification({
+        title: 'Novo episódio',
+        message: `Não foi possivel submeter o novo episódio, ${error}`,
+      }));
 
     api.defaults.baseURL = defaultUri;
   }

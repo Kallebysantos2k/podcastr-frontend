@@ -22,7 +22,7 @@ interface AuthContextData {
   user: User,
   isAdmin: boolean
   isAuthenticated: boolean,
-  signIn: (data: signInData) => Promise<void>,
+  signIn: (data: signInData) => Promise<User>,
   signUp: (data: signUpData) => Promise<void>,
   logout: () => void,
 }
@@ -53,23 +53,28 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }).then((response) => setUserInfo(response.data));
   }, []);
 
-  async function signIn({ email, password }: signInData) {
-    const { data } = await axios.post(`${hostname}/auth/sign-in`, {
+  async function signIn({ email, password }: signInData): Promise<User> {
+    return axios.post(`${hostname}/auth/sign-in`, {
       username: email,
       password,
-    });
+    }).then(({ data }) => {
+      const { user, token } = data as { user: User, token: string };
 
-    const { user, token } = data;
+      setUserInfo(user);
+      setCookie(undefined, 'podcastr.token', token, {
+        sameSite: true,
+        maxAge: 3600 * 1, // 1 hour
+      });
 
-    setUserInfo(user);
-    setCookie(undefined, 'podcastr.token', token, {
-      sameSite: true,
-      maxAge: 3600 * 1, // 1 hour
-    });
+      api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-
-    Router.push('/home');
+      Router.push('/home');
+      return user;
+    })
+      .catch((error) => {
+        const { message } = error?.response?.data;
+        throw new Error(message || '');
+      });
   }
 
   async function signUp({ name, email, password }: signUpData) {

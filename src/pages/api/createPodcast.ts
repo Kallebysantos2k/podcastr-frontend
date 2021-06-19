@@ -1,7 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import axios from 'axios';
 import { File } from 'formidable';
-import { v5, v4 } from 'uuid';
 import { parseFile } from 'music-metadata';
 
 import {
@@ -111,10 +110,9 @@ export default async function createPodcast(req: VercelRequest, res: VercelRespo
   /* if (thumb.type !== 'image/png')
   return res.status(400).json({ error: 'Invalid thumbnail format' }); */
 
-  const folderName = v5(input.name, v4());
-
   try {
     const postedPodcast = await postPodcast(input, duration);
+    const folderName = postedPodcast.id;
     const storedFiles = await storePodcastFiles(audio, thumb, folderName);
 
     const result = await putPodcastFiles(postedPodcast.id, storedFiles);

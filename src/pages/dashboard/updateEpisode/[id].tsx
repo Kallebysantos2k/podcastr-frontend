@@ -7,6 +7,13 @@ import styles from './styles.module.scss';
 import api from '../../../services/api';
 import { Episode, parseToEpisode } from '../../../models/Episode';
 import InputArea from '../../../components/InputArea';
+import { displayErrorNotification, displayInfoNotification, displaySuccessNotification } from '../../../helpers/notificationDisplayer';
+
+interface UpdateEpisodeData {
+  name?: string,
+  description?: string,
+  members?: string,
+}
 
 interface UpdateEpisodeProps {
   episode: Episode
@@ -27,8 +34,25 @@ export const getServerSideProps: GetServerSideProps<UpdateEpisodeProps> = async 
 export default function UpdateEpisode({ episode }: UpdateEpisodeProps) {
   const { register, handleSubmit, control } = useForm();
 
-  function handleUpdateEpisode(data) {
-    console.log(data);
+  function handleUpdateEpisode({ name, description, members }: UpdateEpisodeData) {
+    displayInfoNotification({
+      title: 'Editar Episódio',
+      message: 'Os dados enviados estão a ser processados',
+    });
+
+    api.put(`/podcast/${episode.id}`, {
+      name,
+      description,
+      members,
+    })
+      .then(({ data }) => displaySuccessNotification({
+        title: 'Editar episódio',
+        message: `Episódio  id: ${data.id} foi atualizado com sucesso`,
+      }))
+      .catch((error) => displayErrorNotification({
+        title: 'Editar episódio',
+        message: `Não foi atualizar os dados do episódio id: ${episode.id}, ${error}`,
+      }));
   }
 
   return (

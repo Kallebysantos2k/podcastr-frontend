@@ -6,15 +6,16 @@ interface InputAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string,
   label: string,
   control?: Control,
+  defaultValue?: string,
   otherProps?: any,
 }
 
 export default function InputArea({
-  name, label, control, otherProps, ...defaultProps
+  name, label, control, defaultValue, otherProps, ...defaultProps
 }: InputAreaProps) {
   const [isActive, setIsActive] = useState(false);
 
-  const input = useWatch({ control, name });
+  const input = useWatch({ control, defaultValue, name });
   useEffect(() => setIsActive(!!input), [input]);
 
   function handleLoseFocus() {
@@ -32,6 +33,7 @@ export default function InputArea({
       </span>
 
       <input
+        defaultValue={defaultValue}
         {...defaultProps}
         {...otherProps}
       />

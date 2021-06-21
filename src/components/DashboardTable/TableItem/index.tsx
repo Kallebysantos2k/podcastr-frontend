@@ -72,13 +72,15 @@ export default function DashboardTableItem({ episode }: DashboardTableItemProps)
           {
             isActive && (
               <nav>
-                <span
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => console.log('ok')}
-                >
-                  <MdEdit />
-                </span>
+                <Link href={`/dashboard/updateEpisode/${episode.id}`}>
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => console.log('ok')}
+                  >
+                    <MdEdit />
+                  </span>
+                </Link>
 
                 <span
                   role="button"

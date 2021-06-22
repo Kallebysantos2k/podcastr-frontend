@@ -35,7 +35,9 @@ interface Podcast {
 
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: {
+      sizeLimit: '100mb',
+    },
   },
 };
 

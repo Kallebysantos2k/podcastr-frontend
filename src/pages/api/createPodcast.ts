@@ -1,13 +1,11 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import axios from 'axios';
 import { File } from 'formidable';
 import { parseFile } from 'music-metadata';
 
 import {
   handleRequestForm, IStoredItem, storeFile, storeFolder,
 } from '../../helpers/UploadHelper';
-
-const APIURL = 'http://localhost:8000';
+import api from '../../services/api';
 
 interface ICreatePodcastInput {
   name: string,
@@ -36,7 +34,6 @@ interface Podcast {
 export const config = {
   api: {
     bodyParser: false,
-    externalResolver: true,
   },
 };
 
@@ -56,7 +53,7 @@ async function parsePodcastResponseData(data: any) {
 }
 
 async function postPodcast(data: ICreatePodcastInput, duration: number): Promise<Podcast> {
-  const response = await axios.post(`${APIURL}/podcast/`, {
+  const response = await api.post('/podcast/', {
     name: data.name,
     members: data.members,
     description: data.description,
@@ -67,7 +64,7 @@ async function postPodcast(data: ICreatePodcastInput, duration: number): Promise
 }
 
 async function putPodcastFiles(id: string, files: StoredPodcastFiles): Promise<Podcast> {
-  const response = await axios.put(`${APIURL}/podcast/${id}`, {
+  const response = await api.put(`/podcast/${id}`, {
     fileId: files.storedAudio.id,
     fileUrl: files.storedAudio.location,
     thumbnailId: files.storedThumbnail.id,

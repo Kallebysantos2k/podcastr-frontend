@@ -12,6 +12,8 @@ import {
 import InputArea from '../../components/InputArea';
 import styles from '../../styles/newEpisode.module.scss';
 import api from '../../services/api';
+import { RequestValidationError } from '../../contexts/AuthContext';
+
 
 export default function newEpisode() {
   const { register, handleSubmit, control } = useForm();
@@ -34,12 +36,22 @@ export default function newEpisode() {
     api.post('/podcasts/', formData)
       .then(({ data }) => displaySuccessNotification({
         title: 'Novo episódio',
-        message: `Episódio ${data.name} foi submetido com sucesso`,
+        message:
+        `Episódio ${data.name} foi submetido com sucesso: ${process.env.NEXT_PUBLIC_HOST}/episodes/${data.id}`,
       }))
-      .catch((error) => displayErrorNotification({
-        title: 'Novo episódio',
-        message: `Não foi possivel submeter o novo episódio, ${error}`,
-      }));
+      .catch((errors: [RequestValidationError] | string) => {
+        if (typeof errors === 'string') {
+          return displayErrorNotification({
+            title: 'Erro ao tentar criar episósdio',
+            message: errors,
+          });
+        }
+
+        return errors.forEach((error) => displayErrorNotification({
+          title: `Erro no campo: ${error.property}`,
+          message: `${error.description}`,
+        }));
+      });
   }
 
   function handleAudio(event: FormEvent<HTMLInputElement>) {

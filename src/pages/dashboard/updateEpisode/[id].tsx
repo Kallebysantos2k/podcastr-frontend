@@ -8,6 +8,7 @@ import api from '../../../services/api';
 import { Episode, parseToEpisode } from '../../../models/Episode';
 import InputArea from '../../../components/InputArea';
 import { displayErrorNotification, displayInfoNotification, displaySuccessNotification } from '../../../helpers/notificationDisplayer';
+import { RequestValidationError } from '../../../contexts/AuthContext';
 
 interface UpdateEpisodeData {
   name?: string,
@@ -49,10 +50,19 @@ export default function UpdateEpisode({ episode }: UpdateEpisodeProps) {
         title: 'Editar episódio',
         message: `Episódio  id: ${data.id} foi atualizado com sucesso`,
       }))
-      .catch((error) => displayErrorNotification({
-        title: 'Editar episódio',
-        message: `Não foi atualizar os dados do episódio id: ${episode.id}, ${error}`,
-      }));
+      .catch((errors: [RequestValidationError] | string) => {
+        if (typeof errors === 'string') {
+          return displayErrorNotification({
+            title: 'Erro ao tentar editar episódio',
+            message: errors,
+          });
+        }
+
+        return errors.forEach((error) => displayErrorNotification({
+          title: `Erro no campo: ${error.property}`,
+          message: `${error.description}`,
+        }));
+      });
   }
 
   return (

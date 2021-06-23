@@ -34,7 +34,7 @@ export default function newEpisode() {
     api.post('/podcasts/', formData)
       .then(({ data }) => displaySuccessNotification({
         title: 'Novo episódio',
-        message: `Episódio ${data.result.name} foi submetido com sucesso`,
+        message: `Episódio ${data.name} foi submetido com sucesso`,
       }))
       .catch((error) => displayErrorNotification({
         title: 'Novo episódio',

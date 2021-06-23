@@ -77,7 +77,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     })
       .catch((error) => {
         const { message } = error?.response?.data;
-        throw new Error(message || '');
+        throw message;
       });
   }
 

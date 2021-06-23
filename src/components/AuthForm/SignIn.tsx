@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext, RequestValidationError } from '../../contexts/AuthContext';
 import { displayErrorNotification, displaySuccessNotification } from '../../helpers/notificationDisplayer';
 import InputArea from '../InputArea';
 import styles from './styles.module.scss';
@@ -15,10 +15,19 @@ export default function SignIn() {
         title: 'Bem vindo',
         message: `Seja bem vindo de volta ${user.name}`,
       }))
-      .catch((error) => displayErrorNotification({
-        title: 'Erro no login',
-        message: `Não foi possivel aceder a sua conta, ${error}`,
-      }));
+      .catch((errors: [RequestValidationError] | string) => {
+        if (typeof errors === 'string') {
+          return displayErrorNotification({
+            title: 'Erro ao tentar logar',
+            message: errors === 'Unauthorized' ? 'Email ou Senha errados' : errors,
+          });
+        }
+
+        return errors.forEach((error) => displayErrorNotification({
+          title: `Erro no campo: ${error.property}`,
+          message: `${error.description}`,
+        }));
+      });
   }
 
   return (
@@ -31,6 +40,7 @@ export default function SignIn() {
           type="email"
           label="Endereço de email:"
           control={control}
+          required
           otherProps={register('email')}
         />
 
@@ -39,6 +49,7 @@ export default function SignIn() {
           type="password"
           label="Sua senha:"
           control={control}
+          required
           otherProps={register('password')}
         />
 

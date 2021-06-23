@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
+import Router from 'next/router';
 import { useAuth } from '../../contexts/AuthContext';
 import { PlayerContextProvider } from '../../contexts/PlayerContext';
 import Header from '../../components/Header';
@@ -12,6 +13,10 @@ interface MainAppProps {
 
 export default function MainApp({ children }: MainAppProps) {
   const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    !isAuthenticated && Router.push('/');
+  }, [isAuthenticated]);
 
   return isAuthenticated
     ? (

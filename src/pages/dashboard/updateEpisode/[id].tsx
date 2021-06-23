@@ -22,7 +22,7 @@ interface UpdateEpisodeProps {
 export const getServerSideProps: GetServerSideProps<UpdateEpisodeProps> = async (ctx) => {
   const { id } = ctx.params;
 
-  const { data } = await api.get(`podcast/${id}`);
+  const { data } = await api.get(`podcasts/${id}`);
 
   return {
     props: {
@@ -40,7 +40,7 @@ export default function UpdateEpisode({ episode }: UpdateEpisodeProps) {
       message: 'Os dados enviados estão a ser processados',
     });
 
-    api.put(`/podcast/${episode.id}`, {
+    api.put(`/podcasts/${episode.id}`, {
       name,
       description,
       members,

@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<EpisodeProps> = async (ctx) 
   api.defaults.headers.Authorization = `Bearer ${token}`;
 
   const { id } = ctx.params;
-  const { data } = await api.get(`podcast/${id}`);
+  const { data } = await api.get(`podcasts/${id}`);
 
   return {
     props: {

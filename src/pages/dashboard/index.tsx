@@ -27,8 +27,8 @@ export const getServerSideProps: GetServerSideProps<DashboardProps> = async (ctx
 
   api.defaults.headers.Authorization = `Bearer ${token}`;
 
-  const { data: user } = await api.get('/user') as { data: User };
-  const isAdmin = !!user?.roles.filter((role) => role === 'ROLE_ADMIN')[0];
+  /*   const { data: user } = await api.get('/users') as { data: User };
+  const isAdmin = user?.isAdmin;
 
   if (!isAdmin) {
     return {
@@ -37,9 +37,9 @@ export const getServerSideProps: GetServerSideProps<DashboardProps> = async (ctx
         permanent: false,
       },
     };
-  }
+  } */
 
-  const { data: podcasts } = await api.get('podcast/');
+  const { data: podcasts } = await api.get('podcasts/');
   const episodes: [Episode] = podcasts.map(parseToEpisode);
   const allEpisodes = episodes.sort((a, b) => b.id - a.id);
 

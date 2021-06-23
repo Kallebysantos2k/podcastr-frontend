@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (ctx) => 
 
   api.defaults.headers.Authorization = `Bearer ${token}`;
 
-  const { data } = await api.get('podcast/');
+  const { data } = await api.get('podcasts/');
 
   const parsedData = data.map(parseToEpisode);
   const episodes = parsedData.sort((a, b) => b.id - a.id);

@@ -2,6 +2,6 @@ export interface User {
   id: number,
   name: string,
   email: string,
-  imageUrl: string,
-  roles: [string]
+  image: string,
+  isAdmin: boolean
 }

@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import convertDurationToTimeString from '../../helpers/convertDurationToTimeString';
 
@@ -22,8 +22,8 @@ export function parseToEpisode(data: any): Episode {
     duration: Number(data.duration),
     timeString: convertDurationToTimeString(Number(data.duration)),
     description: data.description,
-    publishedAt: format(parseISO(data.publishedAt), 'd MMM yy', { locale: ptBR }),
-    audio: String(`${data.fileUrl}?raw=1`),
-    thumbnail: String(`${data.thumbnailUrl}?raw=1`),
+    publishedAt: format(new Date(data.publishedAt), 'd MMM yy', { locale: ptBR }),
+    audio: String(`${data.audio}?raw=1`),
+    thumbnail: String(`${data.image}?raw=1`),
   };
 }

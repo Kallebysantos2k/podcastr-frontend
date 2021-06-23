@@ -29,12 +29,9 @@ export default function newEpisode() {
     formData.append('members', values.members);
     formData.append('description', values.description);
     formData.append('audio', values.audio[0]);
-    formData.append('thumb', values.thumb[0]);
+    formData.append('image', values.thumb[0]);
 
-    const defaultUri = api.defaults.baseURL;
-
-    api.defaults.baseURL = '';
-    api.post('/api/createPodcast', formData)
+    api.post('/podcasts/', formData)
       .then(({ data }) => displaySuccessNotification({
         title: 'Novo episódio',
         message: `Episódio ${data.result.name} foi submetido com sucesso`,
@@ -43,8 +40,6 @@ export default function newEpisode() {
         title: 'Novo episódio',
         message: `Não foi possivel submeter o novo episódio, ${error}`,
       }));
-
-    api.defaults.baseURL = defaultUri;
   }
 
   function handleAudio(event: FormEvent<HTMLInputElement>) {

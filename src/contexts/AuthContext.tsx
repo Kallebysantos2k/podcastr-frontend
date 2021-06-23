@@ -7,6 +7,10 @@ import {
 import { User } from '../models/User';
 import api from '../services/api';
 
+export interface RequestValidationError {
+  property: string;
+  description: string;
+}
 interface signInData {
   email: string,
   password: string
@@ -40,7 +44,7 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [userInfo, setUserInfo] = useState<User | null>(null);
 
-  const isAdmin = !!userInfo?.roles.filter((role) => role === 'ROLE_ADMIN')[0];
+  const isAdmin = userInfo?.isAdmin;
   const isAuthenticated = !!userInfo;
 
   useEffect(() => {
@@ -48,7 +52,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
     if (!token) return;
 
-    axios.get(`${hostname}/user`, {
+    axios.get(`${hostname}/users`, {
       headers: { authorization: `Bearer ${token}` },
     }).then((response) => setUserInfo(response.data));
   }, []);
@@ -63,7 +67,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       setUserInfo(user);
       setCookie(undefined, 'podcastr.token', token, {
         sameSite: true,
-        maxAge: 3600 * 1, // 1 hour
+        maxAge: 3600 * 10, // 10 hour
       });
 
       api.defaults.headers.Authorization = `Bearer ${token}`;
@@ -78,7 +82,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }
 
   async function signUp({ name, email, password }: signUpData): Promise<User> {
-    return axios.post(`${hostname}/auth/sign-up`, {
+    return axios.post(`${hostname}/users/`, {
       name,
       email,
       password,
@@ -86,7 +90,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       .then(() => signIn({ email, password }))
       .catch((error) => {
         const { message } = error?.response?.data;
-        throw new Error(message || '');
+        throw new Error(message);
       });
   }
 

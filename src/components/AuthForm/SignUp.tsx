@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../contexts/AuthContext';
+import { RequestValidationError, useAuth } from '../../contexts/AuthContext';
 import {
   displayErrorNotification,
   displaySuccessNotification,
@@ -18,10 +18,19 @@ export default function SignUp() {
         title: `Bem vindo ${user.name}`,
         message: 'Sua conta foi criada com sucesso',
       }))
-      .catch((error) => displayErrorNotification({
-        title: 'Erro ao criar conta',
-        message: `Não foi possivel criar sua conta, ${error}`,
-      }));
+      .catch((errors: [RequestValidationError] | string) => {
+        if (typeof errors === 'string') {
+          return displayErrorNotification({
+            title: 'Erro ao criar sua conta',
+            message: errors,
+          });
+        }
+
+        return errors.forEach((error) => displayErrorNotification({
+          title: `Erro no campo: ${error.property}`,
+          message: `${error.description}`,
+        }));
+      });
   }
 
   return (

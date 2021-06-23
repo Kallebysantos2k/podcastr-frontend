@@ -90,7 +90,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       .then(() => signIn({ email, password }))
       .catch((error) => {
         const { message } = error?.response?.data;
-        throw new Error(message);
+        throw message;
       });
   }
 

@@ -107,6 +107,7 @@ export default function newEpisode() {
             <input
               name="audio"
               type="file"
+              accept="audio/mpeg, audio/ogg, audio/wavpack"
               required
               onInput={handleAudio}
               {...register('audio')}
@@ -123,6 +124,7 @@ export default function newEpisode() {
             <input
               name="thumb"
               type="file"
+              accept="image/png, image/jpeg"
               required
               onInput={handleImage}
               {...register('thumb')}

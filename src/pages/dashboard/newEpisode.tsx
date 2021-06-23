@@ -4,6 +4,8 @@ import Link from 'next/link';
 import {
   MdArrowBack, MdArrowForward, MdAudiotrack, MdImage,
 } from 'react-icons/md';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import {
   displayErrorNotification,
   displayInfoNotification,
@@ -12,8 +14,35 @@ import {
 import InputArea from '../../components/InputArea';
 import styles from '../../styles/newEpisode.module.scss';
 import api from '../../services/api';
+import { User } from '../../models/User';
 import { RequestValidationError } from '../../contexts/AuthContext';
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'podcastr.token': token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  api.defaults.headers.Authorization = `Bearer ${token}`;
+
+  const { data: user } = await api.get('/users') as { data: User };
+  const isAdmin = user?.isAdmin;
+
+  if (!isAdmin) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+};
 
 export default function newEpisode() {
   const { register, handleSubmit, control } = useForm();

@@ -3,11 +3,13 @@ import React from 'react';
 import Link from 'next/link';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
+import { parseCookies } from 'nookies';
 import styles from './styles.module.scss';
 import api from '../../../services/api';
 import { Episode, parseToEpisode } from '../../../models/Episode';
 import InputArea from '../../../components/InputArea';
 import { displayErrorNotification, displayInfoNotification, displaySuccessNotification } from '../../../helpers/notificationDisplayer';
+import { User } from '../../../models/User';
 import { RequestValidationError } from '../../../contexts/AuthContext';
 
 interface UpdateEpisodeData {
@@ -21,6 +23,31 @@ interface UpdateEpisodeProps {
 }
 
 export const getServerSideProps: GetServerSideProps<UpdateEpisodeProps> = async (ctx) => {
+  const { 'podcastr.token': token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  api.defaults.headers.Authorization = `Bearer ${token}`;
+
+  const { data: user } = await api.get('/users') as { data: User };
+  const isAdmin = user?.isAdmin;
+
+  if (!isAdmin) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
   const { id } = ctx.params;
 
   const { data } = await api.get(`podcasts/${id}`);

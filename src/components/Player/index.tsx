@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-import Image from 'next/image';
 import { usePlayer } from '../../contexts/PlayerContext';
 import styles from './styles.module.scss';
 import convertDurationToTimeString from '../../helpers/convertDurationToTimeString';
@@ -62,11 +61,12 @@ export default function Player() {
         episode
           ? (
             <div className={styles.currentEpisode}>
-              <Image
+              <img
                 width={592}
                 height={592}
-                objectFit="cover"
                 src={episode.thumbnail}
+                alt={episode.name}
+                style={{ objectFit: 'cover' }}
               />
               <strong>{episode.name}</strong>
               <span>{episode.members}</span>

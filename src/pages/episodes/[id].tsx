@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
 import { parseCookies } from 'nookies';
 import { Episode, parseToEpisode } from '../../models/Episode';
 import api from '../../services/api';
@@ -52,11 +51,12 @@ export default function EpisodePage({ episode }: EpisodeProps) {
           </button>
         </Link>
 
-        <Image
+        <img
           width={700}
           height={160}
-          objectFit="cover"
           src={episode.thumbnail}
+          alt={episode.name}
+          style={{ objectFit: 'cover' }}
         />
 
         { episode.audio && (

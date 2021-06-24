@@ -19,3 +19,13 @@
     text-transform: capitalize;
   }
 }
+
+@media(max-width: 720px) {
+  .headerContainer {
+    padding: 2rem;
+
+    img {
+      max-width: 6rem;
+    }
+  }
+}

@@ -61,3 +61,16 @@
     }
   }
 }
+
+@media(max-width: 720px) {
+  .userNavContainer {
+    nav {
+      left: 0;
+      transform: translate(calc(-50%), calc(50% + 1rem));
+    
+      &::before {
+        padding: 0;
+      }
+    }
+  }
+}

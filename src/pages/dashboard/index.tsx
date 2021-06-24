@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<DashboardProps> = async (ctx
 
   api.defaults.headers.Authorization = `Bearer ${token}`;
 
-  /*   const { data: user } = await api.get('/users') as { data: User };
+  const { data: user } = await api.get('/users') as { data: User };
   const isAdmin = user?.isAdmin;
 
   if (!isAdmin) {
@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps<DashboardProps> = async (ctx
         permanent: false,
       },
     };
-  } */
+  }
 
   const { data: podcasts } = await api.get('podcasts/');
   const episodes: [Episode] = podcasts.map(parseToEpisode);
@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps<DashboardProps> = async (ctx
 };
 
 export default function Dashboard({ allEpisodes }: DashboardProps) {
-  const [episodes, setEpisodes] = useState(allEpisodes);
+  const [episodes] = useState(allEpisodes);
 
   /*   useEffect(() => {
     const filter = episodes.filter((episode) => episode.id === 13) as [Episode];

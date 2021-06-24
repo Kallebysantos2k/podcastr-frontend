@@ -78,9 +78,11 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
                 <span>{episode.timeString}</span>
               </div>
 
-              <button type="button" onClick={() => playList(episodesList, index)}>
-                <img src="/play-green.svg" alt="Reproduzir episodio" />
-              </button>
+              {episode.audio && (
+                <button type="button" onClick={() => playList(episodesList, index)}>
+                  <img src="/play-green.svg" alt="Reproduzir episodio" />
+                </button>
+              )}
             </li>
           ))}
         </ul>
@@ -126,9 +128,11 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
                 <td>{episode.publishedAt}</td>
                 <td>{episode.timeString}</td>
                 <td>
-                  <button type="button" onClick={() => playList(episodesList, index + latestEpisodes.length)}>
-                    <img src="/play-green.svg" alt="Reproduzir episodio" />
-                  </button>
+                  { episode.audio && (
+                    <button type="button" onClick={() => playList(episodesList, index + latestEpisodes.length)}>
+                      <img src="/play-green.svg" alt="Reproduzir episodio" />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

@@ -59,12 +59,15 @@ export default function EpisodePage({ episode }: EpisodeProps) {
           src={episode.thumbnail}
         />
 
-        <button
-          type="button"
-          onClick={() => play(episode)}
-        >
-          <img src="/play.svg" alt="Reproduzir episodio" />
-        </button>
+        { episode.audio && (
+          <button
+            type="button"
+            onClick={() => play(episode)}
+          >
+            <img src="/play.svg" alt="Reproduzir episodio" />
+          </button>
+        )}
+
       </div>
 
       <header>

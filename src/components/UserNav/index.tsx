@@ -30,8 +30,6 @@ export default function UserNav() {
         isActive && (
           <nav>
             <ul>
-              <li>Meu perfil</li>
-
               {
                 isAdmin && (
                   <Link href="/dashboard">

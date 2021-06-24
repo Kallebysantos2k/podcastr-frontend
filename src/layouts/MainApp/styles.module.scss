@@ -1,7 +1,12 @@
 .wrapper {
   display: flex;
   
-  main {
+  section {
     flex: 1;
+
+    main {
+      max-height: calc(100vh - 6.5rem);
+      overflow-y: scroll;
+    }
   }
 }

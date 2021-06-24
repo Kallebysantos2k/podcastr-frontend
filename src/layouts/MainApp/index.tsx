@@ -22,10 +22,12 @@ export default function MainApp({ children }: MainAppProps) {
     ? (
       <PlayerContextProvider>
         <div className={styles.wrapper}>
-          <main>
+          <section>
             <Header />
-            {children}
-          </main>
+            <main>
+              {children}
+            </main>
+          </section>
 
           <Player />
         </div>

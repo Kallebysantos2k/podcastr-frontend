@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Router from 'next/router';
 import React, { useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { MdDelete, MdEdit } from 'react-icons/md';
@@ -11,9 +10,10 @@ import styles from './styles.module.scss';
 
 interface DashboardTableItemProps {
   episode: Episode
+  onDeleted: Function
 }
 
-export default function DashboardTableItem({ episode }: DashboardTableItemProps) {
+export default function DashboardTableItem({ episode, onDeleted }: DashboardTableItemProps) {
   const [isActive, setIsActive] = useState(false);
 
   function toogleIsActive() {
@@ -30,7 +30,7 @@ export default function DashboardTableItem({ episode }: DashboardTableItemProps)
         title: 'Remover episódio',
         message: `Não foi possível remover o episódio selecionado ${error}`,
       }));
-    Router.reload();
+    onDeleted(episode);
   }
 
   return (

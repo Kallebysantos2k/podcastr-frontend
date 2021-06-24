@@ -10,3 +10,14 @@
     }
   }
 }
+
+@media(max-width: 1080px) {
+  .wrapper {
+    height: 100vh;
+    flex-direction: column;
+
+    section main{
+      max-height: calc(100vh - 6.5rem - 5rem );
+    }
+  }
+}

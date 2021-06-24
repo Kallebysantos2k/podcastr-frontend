@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import Image from 'next/image';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -61,12 +62,12 @@ export default function Player() {
         episode
           ? (
             <div className={styles.currentEpisode}>
-              <img
+              <Image
                 width={592}
                 height={592}
                 src={episode.thumbnail}
                 alt={episode.name}
-                style={{ objectFit: 'cover' }}
+                objectFit="cover"
               />
               <strong>{episode.name}</strong>
               <span>{episode.members}</span>

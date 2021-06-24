@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
+import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
 import { usePlayer } from '../../contexts/PlayerContext';
 import styles from './styles.module.scss';
 import convertDurationToTimeString from '../../helpers/convertDurationToTimeString';
@@ -130,6 +131,7 @@ export default function Player() {
           <button
             type="button"
             disabled={!episode || !hasPrevious}
+            className={styles.playPreviousButton}
             onClick={playPrevious}
           >
             <img src="/play-previous.svg" alt="Reproduzir anterior" />
@@ -143,14 +145,15 @@ export default function Player() {
           >
             {
               isPlaying
-                ? <img src="/pause.svg" alt="Reproduzir" />
-                : <img src="/play.svg" alt="Reproduzir" />
+                ? <BsPauseFill />
+                : <BsPlayFill />
             }
           </button>
 
           <button
             type="button"
             disabled={!episode || !hasNext}
+            className={styles.playNextButton}
             onClick={playNext}
           >
             <img src="/play-next.svg" alt="Reproduzir proximo" />

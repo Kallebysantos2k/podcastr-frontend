@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
@@ -36,7 +35,7 @@ export default function DashboardTableItem({ episode, onDeleted }: DashboardTabl
   return (
     <tr className={styles.episodeContainer}>
       <td className={styles.episodeThumbnail}>
-        <Image
+        <img
           width={120}
           height={120}
           src={episode.thumbnail}

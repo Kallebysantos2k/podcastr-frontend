@@ -3,7 +3,6 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
 import api from '../services/api';
 import styles from '../styles/home.module.scss';
 import { Episode, parseToEpisode } from '../models/Episode';
@@ -60,7 +59,7 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
             <li key={episode.id}>
 
               <div className={styles.latestEpisodeThumbnail}>
-                <Image
+                <img
                   width={192}
                   height={192}
                   src={episode.thumbnail}
@@ -107,7 +106,7 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
             {allEpisodes.map((episode, index) => (
               <tr key={episode.id}>
                 <td className={styles.episodeThumbnail}>
-                  <Image
+                  <img
                     width={120}
                     height={120}
                     src={episode.thumbnail}

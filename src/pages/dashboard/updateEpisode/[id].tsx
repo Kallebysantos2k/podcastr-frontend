@@ -77,15 +77,17 @@ export default function UpdateEpisode({ episode }: UpdateEpisodeProps) {
         title: 'Editar episódio',
         message: `Episódio  id: ${data.id} foi atualizado com sucesso`,
       }))
-      .catch((errors: [RequestValidationError] | string) => {
-        if (typeof errors === 'string') {
+      .catch((req) => {
+        const { message } = req?.response?.data as { message: [RequestValidationError] | string };
+
+        if (typeof message === 'string') {
           return displayErrorNotification({
-            title: 'Erro ao tentar editar episódio',
-            message: errors,
+            title: 'Erro ao tentar criar episósdio',
+            message,
           });
         }
 
-        return errors.forEach((error) => displayErrorNotification({
+        return message.forEach((error) => displayErrorNotification({
           title: `Erro no campo: ${error.property}`,
           message: `${error.description}`,
         }));

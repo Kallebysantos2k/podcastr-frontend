@@ -21,7 +21,7 @@ export default function DashboardTableItem({ episode }: DashboardTableItemProps)
   }
 
   function deleteEpisode() {
-    api.delete(`/podcast/${episode.id}`)
+    api.delete(`/podcasts/${episode.id}`)
       .then(() => displaySuccessNotification({
         title: 'Remover episódio',
         message: 'O episódio selecionado foi removido com sucesso',

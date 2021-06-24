@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { useState } from 'react';
@@ -62,6 +63,10 @@ export default function Dashboard({ allEpisodes }: DashboardProps) {
 
   return (
     <div className={styles.dashboardContainer}>
+      <Head>
+        <title>Dashboard | Podcastr</title>
+      </Head>
+
       <header>
         <h2>Todos episodios</h2>
         <Link href="/dashboard/newEpisode">

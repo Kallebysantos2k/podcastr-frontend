@@ -6,6 +6,7 @@ import {
 } from 'react-icons/md';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import Head from 'next/head';
 import {
   displayErrorNotification,
   displayInfoNotification,
@@ -105,6 +106,10 @@ export default function newEpisode() {
 
   return (
     <div className={styles.newEpisodeContainer}>
+      <Head>
+        <title>New | Podcastr</title>
+      </Head>
+
       <header>
         <Link href="/dashboard">
           <a>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import Head from 'next/head';
 import { SignIn, SignUp } from '../components/AuthForm';
 import styles from '../styles/auth.module.scss';
 import { useAuth } from '../contexts/AuthContext';
@@ -32,6 +33,9 @@ export default function Auth() {
 
   return !isAuthenticated && (
     <div className={styles.authContainer}>
+      <Head>
+        <title>Entrar | Podcastr</title>
+      </Head>
 
       <aside>
         <h1>Podcastr</h1>

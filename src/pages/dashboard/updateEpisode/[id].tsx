@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { parseCookies } from 'nookies';
+import Head from 'next/head';
 import styles from './styles.module.scss';
 import api from '../../../services/api';
 import { Episode, parseToEpisode } from '../../../models/Episode';
@@ -96,6 +97,10 @@ export default function UpdateEpisode({ episode }: UpdateEpisodeProps) {
 
   return (
     <div className={styles.updateEpisodeContainer}>
+      <Head>
+        <title>Update | Podcastr</title>
+      </Head>
+
       <header>
         <Link href="/dashboard">
           <a>

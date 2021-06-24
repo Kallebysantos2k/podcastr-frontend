@@ -68,7 +68,7 @@ export default function UpdateEpisode({ episode }: UpdateEpisodeProps) {
       message: 'Os dados enviados estão a ser processados',
     });
 
-    api.put(`/podcasts/${episode.id}`, {
+    api.patch(`/podcasts/${episode.id}`, {
       name,
       description,
       members,

@@ -71,7 +71,7 @@ export default function newEpisode() {
       .then(({ data }) => displaySuccessNotification({
         title: 'Novo episódio',
         message:
-        `Episódio ${data.name} foi submetido com sucesso: ${process.env.VERCEL_URL}/episodes/${data.id}`,
+        `Episódio ${data.name} foi submetido com sucesso: https://kalleby-podcastr.vercel.app/episodes/${data.id}`,
       }))
       .catch((req) => {
         const { message } = req?.response?.data as { message: [RequestValidationError] | string };

@@ -11,6 +11,7 @@ export interface Episode {
   description: string,
   publishedAt: string,
   audio: string,
+  download: string,
   thumbnail: string,
 }
 
@@ -24,6 +25,7 @@ export function parseToEpisode(data: any): Episode {
     description: data.description,
     publishedAt: format(new Date(data.publishedAt), 'd MMM yy', { locale: ptBR }),
     audio: String(`${data.audio}?raw=1`),
+    download: String(`${data.audio}?dl=1`),
     thumbnail: String(`${data.image}?raw=1`),
   };
 }

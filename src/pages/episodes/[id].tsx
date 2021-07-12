@@ -2,6 +2,8 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
+import React from 'react';
+import { MdFileDownload } from 'react-icons/md';
 import { Episode, parseToEpisode } from '../../models/Episode';
 import api from '../../services/api';
 import styles from './styles.module.scss';
@@ -77,6 +79,9 @@ export default function EpisodePage({ episode }: EpisodeProps) {
           <div>
             <span>{episode.publishedAt}</span>
             <span>{episode.timeString}</span>
+            <a href={episode.download}>
+              <MdFileDownload />
+            </a>
           </div>
         </div>
       </header>
